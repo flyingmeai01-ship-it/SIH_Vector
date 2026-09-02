@@ -43,13 +43,63 @@ public:
 
 };
 
+class secure {
+
+private:
+    std::string secure_key;
+
+public:
+    secure(std::string key) : secure_key(key) {}
+    
+    std::string transform(const std::string& input, const std::string& namak) const {
+        if (input.empty()) return "";
+
+        std::string combined_key = secure_key + namak;
+        size_t key_len = combined_key.length();
+        std::string output = input;
+
+        for (size_t i = 0; i < input.length(); ++i) {
+            output[i] = input[i] ^ combined_key[i % key_len] ^ static_cast<char>(i & 0xFF);
+        }
+    return output;
+    }
+    
+};
+
+std::string anonymize_patient(const std::string& raw_id, const std::string& namak) {
+    unsigned long hash = 5381;
+    std::string combined = raw_id + namak;
+
+    for (char c : combined) {
+        hash = ((hash << 5) + hash) + static_cast<unsigned char> (c);
+    }
+    return "anon_" + std::to_string(hash);
+}
+
 int main(void) {
-    TelementryRecord record(1001, 950.5f, 320.0f);
+    // A. Create patient record
+    TelementryRecord record(1001, 895.5f, 340.0f);
 
-    record.set_score(980.0f);
+    // B. Setup cipher engine
+    std::string master_secret = "SIH_KEY_2026";
+    std::string session_salt = "Session_Alpha";
+     secure data_key(master_secret);
 
-    std::string json_data = record.to_json_string();
-    std::cout << "Serialized Class Data: " << json_data << "\n";
+    // C. Serialize telemetry data
+    std::string raw_json = record.to_json_string();
+    std::cout << "1. Plaintext JSON Payload:\n   " << raw_json << "\n\n";
+
+    // D. Encrypt using CipherEngine
+    std::string encrypted_payload = data_key.transform(raw_json, session_salt);
+    std::cout << "2. Encrypted Ciphertext:\n   " << encrypted_payload << "\n\n";
+
+    // E. Decrypt using identical operation
+    std::string decrypted_payload = data_key.transform(encrypted_payload, session_salt);
+    std::cout << "3. Decrypted Payload Verification:\n   " << decrypted_payload << "\n\n";
+
+    // F. Anonymize user ID
+    std::string anon_id = anonymize_patient("PATIENT_XYZ_98", session_salt);
+    std::cout << "4. Anonymized User ID:\n   " << anon_id << "\n";
 
     return 0;
 
