@@ -1,0 +1,19 @@
+{
+  "name": "CARE — Caring And Remembering Everyday",
+  "short_name": "CARE",
+  "description": "AI-powered cognitive gaming and memory assistance for elderly care",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0a0e1a",
+  "theme_color": "#7c3aed",
+  "categories": ["health", "medical", "games"],
+  "icons": [
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
