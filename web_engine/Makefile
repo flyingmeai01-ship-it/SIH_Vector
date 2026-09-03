@@ -1,18 +1,23 @@
-EMCC = emcc
-CFLAGS = -O2 -s EXPORTED_RUNTIME_METHODS='["cwrap"]' -s NO_EXIT_RUNTIME=1 -s ALLOW_MEMORY_GROWTH=1
+# Use em++ compiler for C++ and Embind support
+CXX = em++
+CXXFLAGS = -O2 --bind -s EXPORTED_RUNTIME_METHODS='["cwrap"]' -s NO_EXIT_RUNTIME=1 -s ALLOW_MEMORY_GROWTH=1
 
-all: math_core.js vault_core.js copy_to_frontend
+# Output targets
+MATH_TARGET = math_core.js
+VAULT_TARGET = vault_core.js
 
-math_core.js: math_core.cpp
-	$(EMCC) math_core.cpp -o math_core.js $(CFLAGS)
+SRCS_MATH = math_core.cpp
+SRCS_VAULT = vault_core.cpp
 
-vault_core.js: vault_core.cpp
-	$(EMCC) vault_core.cpp -o vault_core.js -lembind -s MODULARIZE=1 -s EXPORT_NAME="createVaultModule"
+all: $(MATH_TARGET) $(VAULT_TARGET)
 
-copy_to_frontend:
-	mkdir -p ../frontend/public/
-	cp math_core.js math_core.wasm ../frontend/public/ 2>/dev/null || true
-	cp vault_core.js vault_core.wasm ../frontend/public/ 2>/dev/null || true
+$(MATH_TARGET): $(SRCS_MATH)
+	$(CXX) $(CXXFLAGS) $(SRCS_MATH) -o $(MATH_TARGET)
+
+$(VAULT_TARGET): $(SRCS_VAULT)
+	$(CXX) $(CXXFLAGS) $(SRCS_VAULT) -o $(VAULT_TARGET)
 
 clean:
-	rm -f *.js *.wasm
+	rm -f *.js *.wasm *.o
+
+.PHONY: all clean
