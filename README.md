@@ -1,6 +1,6 @@
 # CARE — Caring And Remembering Everyday 🧠
 
-**Smart India Hackathon (SIH) 2024 — Problem Statement 26003**
+**Smart India Hackathon (SIH) 2026 — Problem Statement 26003**
 *AI-Based Cognitive Gaming and Memory Assistance Platform for Elderly Dementia Patients*
 
 ## Overview
