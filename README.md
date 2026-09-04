@@ -32,8 +32,9 @@ The project is built on a 4-Stage architectural pipeline designed to bridge high
 ### Stage 2: Offline Persistence & Sync Layer
 *Ensuring seamless offline capability with background sync.*
 
-- **❌ Stage 2A: IndexedDB Wrapper**
-  - Define local schemas for storing offline activity.
+- **✅ Stage 2A: IndexedDB Wrapper**
+  - Define local schemas for storing offline activity using `idb`.
+  - Configured `telemetry`, `voice_logs`, and `settings` local tables.
 - **❌ Stage 2B: FastAPI Sync Backend (Optional/Future)**
   - Set up a lightweight Python FastAPI server to sync encrypted telemetry when the user comes back online.
 

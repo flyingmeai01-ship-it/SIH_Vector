@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { getRecentTelemetry, initDB } from "../lib/db";
 
 /* ──────────────────────────────────────────────
    NEUROBLOOM — Home Screen (Stage 1A + Stage 2)
@@ -81,13 +82,8 @@ const MAIN_ACTIONS = [
   },
 ];
 
-// ── Quick stats (placeholder) ───────────────
-const QUICK_STATS = [
-  { label: "Today's Score", value: "—", icon: "⭐" },
-  { label: "Streak", value: "—", icon: "🔥" },
-  { label: "Mood", value: "—", icon: "😊" },
-];
-
+// ── Quick stats (dynamic from IndexedDB) ──────
+// Loaded inside the component now
 // ── Action Card Component ───────────────────
 function ActionCard({ action, index, onTap }) {
   const [pressed, setPressed] = useState(false);
@@ -184,6 +180,35 @@ export default function Home() {
   const { canInstall, install, isInstalled } = useInstallPrompt();
   const [currentTime, setCurrentTime] = useState("");
   const [activeAction, setActiveAction] = useState(null);
+  
+  // Stage 2A: Offline DB Stats State
+  const [stats, setStats] = useState([
+    { label: "Today's Score", value: "—", icon: "⭐" },
+    { label: "Streak", value: "—", icon: "🔥" },
+    { label: "Mood", value: "—", icon: "😊" },
+  ]);
+
+  // Load telemetry from IndexedDB
+  useEffect(() => {
+    async function loadStats() {
+      try {
+        await initDB();
+        const recent = await getRecentTelemetry(1);
+        
+        if (recent.length > 0) {
+          // If we have data, update the UI!
+          setStats((prev) => [
+            { ...prev[0], value: recent[0].score.toString() },
+            { ...prev[1], value: "1 day" },
+            { ...prev[2], value: "Good" }
+          ]);
+        }
+      } catch (e) {
+        console.error("Failed to load DB stats", e);
+      }
+    }
+    loadStats();
+  }, []);
 
   // Live clock
   useEffect(() => {
@@ -311,25 +336,20 @@ export default function Home() {
 
         {/* ── Quick Stats Row ──────────────────── */}
         <section
-          className="grid grid-cols-3 gap-3 mb-8 sm:mb-10"
-          style={{ animation: "fade-in-up 0.6s ease-out 200ms both" }}
+          className="grid grid-cols-3 gap-3 sm:gap-4 delay-300 fill-mode-both" style={{ animation: "fade-in-up 0.6s ease-out" }}
           aria-label="Quick statistics"
         >
-          {QUICK_STATS.map((stat) => (
+          {stats.map((stat, i) => (
             <div
-              key={stat.label}
-              className="flex flex-col items-center gap-1 py-4 px-2 rounded-2xl
-                         bg-white/[0.04] border border-white/[0.06]
-                         backdrop-blur-sm"
+              key={i}
+              className="bg-[#141828] border border-white/5 rounded-2xl p-3 sm:p-4 flex flex-col items-center justify-center text-center shadow-lg"
             >
-              <span className="text-2xl" role="img" aria-hidden="true">
-                {stat.icon}
-              </span>
-              <span className="text-lg sm:text-xl font-bold text-white">
-                {stat.value}
-              </span>
-              <span className="text-[11px] sm:text-xs text-slate-400 font-medium text-center leading-tight">
+              <span className="text-2xl mb-1 filter drop-shadow-sm">{stat.icon}</span>
+              <span className="text-[10px] sm:text-xs text-slate-400 font-medium tracking-wide uppercase mb-0.5">
                 {stat.label}
+              </span>
+              <span className="text-base sm:text-lg font-bold text-white">
+                {stat.value}
               </span>
             </div>
           ))}
