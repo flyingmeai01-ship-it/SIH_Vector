@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { getRecentTelemetry, initDB } from "../lib/db";
 
 /* ──────────────────────────────────────────────
@@ -61,6 +62,7 @@ const MAIN_ACTIONS = [
     gradient: "from-emerald-600 via-green-600 to-teal-700",
     shadowColor: "rgba(16, 185, 129, 0.35)",
     borderColor: "rgba(16, 185, 129, 0.3)",
+    href: "/games/memory",
   },
   {
     id: "voice",
@@ -85,98 +87,106 @@ const MAIN_ACTIONS = [
 // ── Quick stats (dynamic from IndexedDB) ──────
 // Loaded inside the component now
 // ── Action Card Component ───────────────────
-function ActionCard({ action, index, onTap }) {
-  const [pressed, setPressed] = useState(false);
+import Link from 'next/link';
 
-  return (
-    <button
-      id={`action-${action.id}`}
-      onClick={() => onTap(action.id)}
-      onPointerDown={() => setPressed(true)}
-      onPointerUp={() => setPressed(false)}
-      onPointerLeave={() => setPressed(false)}
-      className="w-full text-left focus:outline-none focus-visible:ring-4 focus-visible:ring-purple-400/50 rounded-3xl"
+function ActionCard({ action, index, onTap }) {
+  const innerContent = (
+    <div
+      className={`
+        relative overflow-hidden rounded-3xl p-6 sm:p-8
+        bg-gradient-to-br ${action.gradient}
+        transition-all duration-300 ease-out
+        scale-100 group-hover:scale-[1.02] group-active:scale-[0.97]
+      `}
       style={{
-        animation: `fade-in-up 0.7s ease-out ${150 + index * 120}ms both`,
+        boxShadow: `0 8px 40px ${action.shadowColor}`,
+        border: `1px solid ${action.borderColor}`,
       }}
-      aria-label={`${action.title}: ${action.subtitle}`}
     >
-      <div
-        className={`
-          relative overflow-hidden rounded-3xl p-6 sm:p-8
-          bg-gradient-to-br ${action.gradient}
-          transition-all duration-300 ease-out
-          ${pressed ? "scale-[0.97]" : "scale-100 hover:scale-[1.02]"}
-        `}
-        style={{
-          boxShadow: pressed
-            ? `0 4px 20px ${action.shadowColor}`
-            : `0 8px 40px ${action.shadowColor}`,
-          border: `1px solid ${action.borderColor}`,
-        }}
-      >
-        {/* Glass overlay pattern */}
-        <div className="absolute inset-0 opacity-10">
-          <div
-            className="absolute -top-1/2 -right-1/2 w-full h-full rounded-full"
+      {/* Glass overlay pattern */}
+      <div className="absolute inset-0 opacity-10">
+        <div
+          className="absolute -top-1/2 -right-1/2 w-full h-full rounded-full"
+          style={{
+            background:
+              "radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%)",
+          }}
+        />
+      </div>
+
+      <div className="relative flex items-center gap-5 sm:gap-6">
+        {/* Emoji icon */}
+        <div className="flex-shrink-0">
+          <span
+            className="text-5xl sm:text-6xl block"
             style={{
-              background:
-                "radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%)",
+              filter: "drop-shadow(0 4px 8px rgba(0,0,0,0.3))",
+              animation: `float 4s ease-in-out ${index * 0.5}s infinite`,
             }}
-          />
+            role="img"
+            aria-hidden="true"
+          >
+            {action.emoji}
+          </span>
         </div>
 
-        <div className="relative flex items-center gap-5 sm:gap-6">
-          {/* Emoji icon */}
-          <div className="flex-shrink-0">
-            <span
-              className="text-5xl sm:text-6xl block"
-              style={{
-                filter: "drop-shadow(0 4px 8px rgba(0,0,0,0.3))",
-                animation: `float 4s ease-in-out ${index * 0.5}s infinite`,
-              }}
-              role="img"
-              aria-hidden="true"
-            >
-              {action.emoji}
-            </span>
-          </div>
+        {/* Text */}
+        <div className="min-w-0">
+          <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+            {action.title}
+          </h2>
+          <p className="text-base sm:text-lg text-white/75 mt-1 font-light">
+            {action.subtitle}
+          </p>
+        </div>
 
-          {/* Text */}
-          <div className="min-w-0">
-            <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
-              {action.title}
-            </h2>
-            <p className="text-base sm:text-lg text-white/75 mt-1 font-light">
-              {action.subtitle}
-            </p>
-          </div>
-
-          {/* Arrow */}
-          <div className="flex-shrink-0 ml-auto opacity-60">
-            <svg
-              className="w-8 h-8 sm:w-10 sm:h-10"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={2.5}
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M9 5l7 7-7 7"
-              />
-            </svg>
-          </div>
+        {/* Arrow */}
+        <div className="flex-shrink-0 ml-auto opacity-60">
+          <svg
+            className="w-8 h-8 sm:w-10 sm:h-10"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={2.5}
+            viewBox="0 0 24 24"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+          </svg>
         </div>
       </div>
+    </div>
+  );
+
+  const commonProps = {
+    id: `action-${action.id}`,
+    className: "group w-full text-left focus:outline-none focus-visible:ring-4 focus-visible:ring-purple-400/50 rounded-3xl block",
+    style: { animation: `fade-in-up 0.7s ease-out ${150 + index * 120}ms both` },
+    "aria-label": `${action.title}: ${action.subtitle}`
+  };
+
+  if (action.href) {
+    return (
+      <Link href={action.href} {...commonProps}>
+        {innerContent}
+      </Link>
+    );
+  }
+
+  return (
+    <button onClick={() => onTap(action.id)} {...commonProps}>
+      {innerContent}
     </button>
   );
 }
 
+
 // ── Main Home Page ──────────────────────────
 export default function Home() {
-  const greeting = getGreeting();
+  const router = useRouter();
+  const [greeting, setGreeting] = useState({ text: "Welcome", emoji: "👋" });
+  
+  useEffect(() => {
+    setGreeting(getGreeting());
+  }, []);
   const { canInstall, install, isInstalled } = useInstallPrompt();
   const [currentTime, setCurrentTime] = useState("");
   const [activeAction, setActiveAction] = useState(null);
@@ -227,10 +237,9 @@ export default function Home() {
     return () => clearInterval(interval);
   }, []);
 
-  // Handle action taps — placeholder for future routing
+  // Handle action taps — navigate or show placeholder
   const handleActionTap = (actionId) => {
     setActiveAction(actionId);
-    // Future: navigate to game / voice / help pages
     setTimeout(() => setActiveAction(null), 800);
   };
 

@@ -45,7 +45,14 @@ self.addEventListener("fetch", (event) => {
       .catch(() => {
         // Offline: serve from cache
         return caches.match(event.request).then((cached) => {
-          return cached || caches.match("/");
+          if (cached) return cached;
+          
+          // Only fallback to '/' if it's a navigation request (HTML)
+          if (event.request.mode === 'navigate') {
+            return caches.match("/");
+          }
+          
+          return new Response('', { status: 404, statusText: 'Not Found' });
         });
       })
   );
