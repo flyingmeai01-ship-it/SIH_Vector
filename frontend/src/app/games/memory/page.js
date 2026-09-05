@@ -181,7 +181,7 @@ export default function MemoryMatch() {
         </div>
 
         {/* ── Game Board (4-Column Grid) ────────────── */}
-        <div className="grid grid-cols-4 gap-4 mb-8 flex-1 content-start">
+        <div className="grid grid-cols-4 gap-4 mb-8 flex-1 content-center">
           {deck.map((card, index) => (
             <button
               key={card.id}

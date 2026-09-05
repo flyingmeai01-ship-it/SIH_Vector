@@ -10,10 +10,13 @@ const ITEM_TYPES = {
   weed: { emoji: "☘️", points: -50 }
 };
 
+const ENCOURAGEMENTS = ["Great work!", "Marvelous!", "Nice work!", "You got it!"];
+
 export default function TeaLeafPlucker() {
   const router = useRouter();
 
   const [items, setItems] = useState([]);
+  const [floatingTexts, setFloatingTexts] = useState([]);
   const [score, setScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(60);
   const [gameState, setGameState] = useState("playing"); // 'playing', 'won'
@@ -22,6 +25,7 @@ export default function TeaLeafPlucker() {
   const spawnerRef = useRef(null);
   const gameActive = useRef(true);
   const scoreRef = useRef(0);
+  const correctTapsRef = useRef(0);
 
   useEffect(() => {
     scoreRef.current = score;
@@ -42,6 +46,7 @@ export default function TeaLeafPlucker() {
   const startGame = () => {
     gameActive.current = true;
     setItems([]);
+    setFloatingTexts([]);
     setScore(0);
     setTimeLeft(60);
     setGameState("playing");
@@ -113,6 +118,28 @@ export default function TeaLeafPlucker() {
     if (e) e.preventDefault();
 
     setItems((prev) => prev.filter(item => item.id !== id));
+    
+    if (type === "target" && e) {
+      correctTapsRef.current += 1;
+      
+      // Show encouragement every 5-6 correct taps
+      if (correctTapsRef.current >= 5) {
+        if (correctTapsRef.current >= 6 || Math.random() > 0.5) {
+          correctTapsRef.current = 0; // Reset counter
+          
+          const newText = {
+            id: Math.random().toString(36).substring(2, 11),
+            text: ENCOURAGEMENTS[Math.floor(Math.random() * ENCOURAGEMENTS.length)],
+            x: e.clientX,
+            y: e.clientY
+          };
+          setFloatingTexts(prev => [...prev, newText]);
+          setTimeout(() => {
+            setFloatingTexts(prev => prev.filter(t => t.id !== newText.id));
+          }, 1000);
+        }
+      }
+    }
     
     setScore((prev) => {
       const newScore = prev + points;
@@ -187,7 +214,7 @@ export default function TeaLeafPlucker() {
             key={item.id}
             onPointerDown={(e) => handleTap(item.id, item.type, item.points, e)}
             onAnimationEnd={() => handleMiss(item.id, item.type)}
-            className="absolute top-0 animate-linear-fall pointer-events-auto touch-manipulation focus:outline-none"
+            className={`absolute top-0 animate-linear-fall pointer-events-auto touch-manipulation focus:outline-none ${item.type === 'weed' ? 'hue-rotate-180 brightness-75' : ''}`}
             style={{ 
               left: `${item.x}%`,
               animationDuration: `${item.duration}s`,
@@ -195,13 +222,26 @@ export default function TeaLeafPlucker() {
             aria-label={`Tap ${item.emoji}`}
           >
             <span 
-              className="block text-6xl drop-shadow-[0_10px_10px_rgba(0,0,0,0.5)] active:scale-75 transition-transform"
+              className="block text-8xl drop-shadow-[0_10px_10px_rgba(0,0,0,0.5)] active:scale-75 transition-transform"
               role="img" 
               aria-hidden="true"
             >
               {item.emoji}
             </span>
           </button>
+        ))}
+      </div>
+
+      {/* ── Floating Texts Overlay ────────────── */}
+      <div className="fixed inset-0 pointer-events-none z-50">
+        {floatingTexts.map(t => (
+          <div
+            key={t.id}
+            className="absolute text-3xl md:text-4xl font-black text-green-300 drop-shadow-xl animate-float-up whitespace-nowrap"
+            style={{ left: t.x, top: t.y }}
+          >
+            {t.text}
+          </div>
         ))}
       </div>
 
