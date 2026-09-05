@@ -139,7 +139,7 @@ export default function MemoryMatch() {
   };
 
   return (
-    <main className="min-h-dvh flex flex-col relative overflow-hidden bg-[#F8F9FA]">
+    <main className="min-h-dvh flex flex-col relative overflow-hidden bg-elder-canvas">
 
 
       <div className="relative z-10 flex flex-col flex-1 w-full max-w-lg mx-auto px-5 sm:px-6 py-6 sm:py-8">
@@ -148,7 +148,7 @@ export default function MemoryMatch() {
         <header className="flex items-center justify-between mb-8">
           <button
             onClick={() => router.push("/")}
-            className="w-12 h-12 bg-[#FFFFFF] shadow-sm rounded-2xl flex items-center justify-center text-[#2D3748] hover:shadow-md transition-all"
+            className="w-12 h-12 bg-elder-card shadow-sm rounded-2xl flex items-center justify-center text-elder-text hover:shadow-md transition-all"
             aria-label="Go Back"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
@@ -157,8 +157,8 @@ export default function MemoryMatch() {
           </button>
           
           <div className="text-center">
-            <h1 className="text-2xl font-black text-[#2D3748] tracking-tight">Memory Match</h1>
-            <p className="text-sm text-[#2D3748] font-bold">Find the pairs • Level {level}</p>
+            <h1 className="text-2xl font-black text-elder-text tracking-tight">Memory Match</h1>
+            <p className="text-sm text-elder-text font-bold">Find the pairs • Level {level}</p>
           </div>
           
           {/* Invisible placeholder for centering */}
@@ -166,14 +166,14 @@ export default function MemoryMatch() {
         </header>
 
         {/* ── Stats Row ────────────────────────── */}
-        <div className="flex justify-between items-center mb-8 px-4 py-3 bg-[#FFFFFF] rounded-2xl shadow-md">
+        <div className="flex justify-between items-center mb-8 px-4 py-3 bg-elder-card rounded-2xl shadow-md">
           <div className="flex flex-col">
-            <span className="text-xs text-[#2D3748] uppercase tracking-wider font-bold">Moves</span>
-            <span className="text-xl font-black text-[#2D3748]">{moves}</span>
+            <span className="text-xs text-elder-text uppercase tracking-wider font-bold">Moves</span>
+            <span className="text-xl font-black text-elder-text">{moves}</span>
           </div>
           <div className="flex flex-col text-right">
-            <span className="text-xs text-[#2D3748] uppercase tracking-wider font-bold">Time</span>
-            <span className="text-xl font-black text-[#2D3748]">{formatTime(seconds)}</span>
+            <span className="text-xs text-elder-text uppercase tracking-wider font-bold">Time</span>
+            <span className="text-xl font-black text-elder-text">{formatTime(seconds)}</span>
           </div>
         </div>
 
@@ -192,16 +192,16 @@ export default function MemoryMatch() {
                 }`}
               >
                 {/* Front (Hidden state) */}
-                <div className="absolute inset-0 backface-hidden bg-[#2A9D8F] rounded-2xl shadow-sm flex items-center justify-center">
-                  <span className="text-3xl text-[#FFFFFF] font-bold block">?</span>
+                <div className="absolute inset-0 backface-hidden bg-elder-teal rounded-2xl shadow-sm flex items-center justify-center">
+                  <span className="text-3xl text-elder-card font-bold block">?</span>
                 </div>
 
                 {/* Back (Revealed state) */}
                 <div
                   className={`absolute inset-0 backface-hidden rotate-y-180 rounded-2xl shadow-sm flex items-center justify-center text-5xl ${
                     card.isMatched
-                      ? "bg-[#DE7A68]"
-                      : "bg-[#FFFFFF] border border-[#2D3748]/10 text-[#2D3748]"
+                      ? "bg-[#15803D]"
+                      : "bg-elder-card border border-elder-muted/20 text-elder-text"
                   }`}
                 >
                   <span
@@ -218,15 +218,15 @@ export default function MemoryMatch() {
 
         {/* ── Win Overlay ──────────────────────── */}
         {gameState === "won" && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#F8F9FA]/90 backdrop-blur-sm p-6" style={{ animation: "fade-in 0.3s ease-out both" }}>
-            <div className="bg-[#FFFFFF] rounded-3xl p-8 shadow-lg text-center max-w-sm w-full" style={{ animation: "scale-in 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) both" }}>
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-elder-canvas/90 backdrop-blur-sm p-6" style={{ animation: "fade-in 0.3s ease-out both" }}>
+            <div className="bg-elder-card rounded-3xl p-8 shadow-lg text-center max-w-sm w-full" style={{ animation: "scale-in 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) both" }}>
               <span className="text-7xl block mb-4">🎉</span>
-              <h2 className="text-3xl font-black text-[#2D3748] mb-2">Great Job!</h2>
-              <p className="text-[#2D3748] font-bold text-lg mb-6">You found all the pairs!</p>
+              <h2 className="text-3xl font-black text-elder-text mb-2">Great Job!</h2>
+              <p className="text-elder-text font-bold text-lg mb-6">You found all the pairs!</p>
               
-              <div className="bg-[#F8F9FA] shadow-inner border border-[#2D3748]/10 rounded-2xl p-4 mb-8">
-                <p className="text-sm text-[#2D3748] font-bold uppercase tracking-wide">Score</p>
-                <p className="text-4xl font-black text-[#2D3748] my-1">
+              <div className="bg-elder-canvas shadow-inner border border-elder-muted/20 rounded-2xl p-4 mb-8">
+                <p className="text-sm text-elder-text font-bold uppercase tracking-wide">Score</p>
+                <p className="text-4xl font-black text-elder-text my-1">
                   {Math.max(100, 1000 - ((moves) * 10) - (seconds * 2))}
                 </p>
               </div>
@@ -234,21 +234,21 @@ export default function MemoryMatch() {
               <div className="flex gap-4">
                 <button
                   onClick={() => router.push("/games")}
-                  className="flex-1 py-4 rounded-2xl bg-[#F8F9FA] shadow-sm text-[#2D3748] font-bold hover:shadow-md transition-colors"
+                  className="flex-1 py-4 rounded-2xl bg-elder-canvas shadow-sm text-elder-text font-bold hover:shadow-md transition-colors"
                 >
                   Exit
                 </button>
                 {level < 3 ? (
                   <button
                     onClick={() => startNewGame(level + 1)}
-                    className="flex-1 py-4 rounded-2xl bg-[#2A9D8F] text-[#FFFFFF] shadow-sm font-black hover:shadow-md transition-all"
+                    className="flex-1 py-4 rounded-2xl bg-elder-teal text-elder-card shadow-sm font-black hover:shadow-md transition-all"
                   >
                     Next Level
                   </button>
                 ) : (
                   <button
                     onClick={() => startNewGame(1)}
-                    className="flex-1 py-4 rounded-2xl bg-[#2A9D8F] text-[#FFFFFF] shadow-sm font-black hover:shadow-md transition-all"
+                    className="flex-1 py-4 rounded-2xl bg-elder-teal text-elder-card shadow-sm font-black hover:shadow-md transition-all"
                   >
                     Play Again
                   </button>

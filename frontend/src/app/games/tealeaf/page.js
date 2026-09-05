@@ -162,7 +162,7 @@ export default function TeaLeafPlucker() {
   };
 
   return (
-    <main className="min-h-dvh flex flex-col relative overflow-hidden bg-[#F8F9FA]">
+    <main className="min-h-dvh flex flex-col relative overflow-hidden bg-elder-canvas">
 
 
       <div className="relative z-10 flex flex-col flex-1 w-full max-w-lg mx-auto px-4 sm:px-6 py-6 sm:py-8 pointer-events-none">
@@ -171,7 +171,7 @@ export default function TeaLeafPlucker() {
         <header className="flex items-center justify-between mb-6 pointer-events-auto">
           <button
             onClick={() => router.push("/games")}
-            className="w-12 h-12 bg-[#FFFFFF] shadow-sm rounded-2xl flex items-center justify-center text-[#2D3748] hover:shadow-md transition-all"
+            className="w-12 h-12 bg-elder-card shadow-sm rounded-2xl flex items-center justify-center text-elder-text hover:shadow-md transition-all"
             aria-label="Go Back"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
@@ -180,22 +180,22 @@ export default function TeaLeafPlucker() {
           </button>
           
           <div className="text-center">
-            <h1 className="text-2xl font-black text-[#2D3748] tracking-tight">Tea Leaf Plucker</h1>
-            <p className="text-sm text-[#2D3748] font-bold">Tap the fresh leaves 🌱 • Level {score >= 1000 ? 3 : (score >= 500 ? 2 : 1)}</p>
+            <h1 className="text-2xl font-black text-elder-text tracking-tight">Tea Leaf Plucker</h1>
+            <p className="text-sm text-elder-text font-bold">Tap the fresh leaves 🌱 • Level {score >= 1000 ? 3 : (score >= 500 ? 2 : 1)}</p>
           </div>
           
           <div className="w-12 h-12" />
         </header>
 
         {/* ── Stats Row ────────────────────────── */}
-        <div className="flex justify-between items-center px-6 py-4 bg-[#FFFFFF] shadow-md rounded-2xl pointer-events-auto">
+        <div className="flex justify-between items-center px-6 py-4 bg-elder-card shadow-md rounded-2xl pointer-events-auto">
           <div className="flex flex-col">
-            <span className="text-xs text-[#2D3748] uppercase tracking-wider font-bold">Score</span>
-            <span className="text-3xl font-black text-[#2D3748]">{score}</span>
+            <span className="text-xs text-elder-text uppercase tracking-wider font-bold">Score</span>
+            <span className="text-3xl font-black text-elder-text">{score}</span>
           </div>
           <div className="flex flex-col text-right">
-            <span className="text-xs text-[#2D3748] uppercase tracking-wider font-bold">Time Left</span>
-            <span className={`text-3xl font-black ${timeLeft <= 10 ? 'text-[#C94A4A] animate-pulse' : 'text-[#2D3748]'}`}>
+            <span className="text-xs text-elder-text uppercase tracking-wider font-bold">Time Left</span>
+            <span className={`text-3xl font-black ${timeLeft <= 10 ? 'text-elder-sos animate-pulse' : 'text-elder-text'}`}>
               {timeLeft}s
             </span>
           </div>
@@ -234,7 +234,7 @@ export default function TeaLeafPlucker() {
         {floatingTexts.map(t => (
           <div
             key={t.id}
-            className="absolute text-3xl md:text-4xl font-black text-[#2A9D8F] drop-shadow-sm animate-float-up whitespace-nowrap"
+            className="absolute text-3xl md:text-4xl font-black text-[#15803D] drop-shadow-sm animate-float-up whitespace-nowrap"
             style={{ left: t.x, top: t.y }}
           >
             {t.text}
@@ -244,15 +244,15 @@ export default function TeaLeafPlucker() {
 
       {/* ── Win Overlay ──────────────────────── */}
       {gameState === "won" && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#F8F9FA]/90 backdrop-blur-sm p-6 animate-fade-in pointer-events-auto">
-          <div className="bg-[#FFFFFF] rounded-3xl p-8 shadow-lg text-center max-w-sm w-full animate-scale-in">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-elder-canvas/90 backdrop-blur-sm p-6 animate-fade-in pointer-events-auto">
+          <div className="bg-elder-card rounded-3xl p-8 shadow-lg text-center max-w-sm w-full animate-scale-in">
             <span className="text-7xl block mb-4">🏆</span>
-            <h2 className="text-3xl font-black text-[#2D3748] mb-2">Time's Up!</h2>
-            <p className="text-[#2D3748] font-bold text-lg mb-6">Let's see how much tea you plucked.</p>
+            <h2 className="text-3xl font-black text-elder-text mb-2">Time's Up!</h2>
+            <p className="text-elder-text font-bold text-lg mb-6">Let's see how much tea you plucked.</p>
             
-            <div className="bg-[#F8F9FA] rounded-2xl p-6 mb-8 shadow-inner border border-[#2D3748]/10">
-              <p className="text-sm text-[#2D3748] uppercase tracking-widest font-bold">Final Score</p>
-              <p className="text-6xl font-black text-[#2D3748] my-2">
+            <div className="bg-elder-canvas rounded-2xl p-6 mb-8 shadow-inner border border-elder-muted/20">
+              <p className="text-sm text-elder-text uppercase tracking-widest font-bold">Final Score</p>
+              <p className="text-6xl font-black text-elder-text my-2">
                 {score}
               </p>
             </div>
@@ -260,13 +260,13 @@ export default function TeaLeafPlucker() {
             <div className="flex gap-4">
               <button
                 onClick={() => router.push("/games")}
-                className="flex-1 py-4 rounded-2xl bg-[#F8F9FA] shadow-sm text-[#2D3748] font-bold hover:shadow-md transition-all"
+                className="flex-1 py-4 rounded-2xl bg-elder-canvas shadow-sm text-elder-text font-bold hover:shadow-md transition-all"
               >
                 Exit
               </button>
               <button
                 onClick={startGame}
-                className="flex-1 py-4 rounded-2xl bg-[#2A9D8F] shadow-sm text-[#FFFFFF] font-black hover:shadow-md transition-all active:scale-95"
+                className="flex-1 py-4 rounded-2xl bg-elder-teal shadow-sm text-elder-card font-black hover:shadow-md transition-all active:scale-95"
               >
                 Play Again
               </button>

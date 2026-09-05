@@ -59,7 +59,7 @@ const MAIN_ACTIONS = [
     title: "Play Games",
     subtitle: "Train your mind with fun puzzles",
     emoji: "🎮",
-    bgClass: "bg-[#2A9D8F]",
+    bgClass: "bg-elder-teal",
     href: "/games",
   },
   {
@@ -67,7 +67,7 @@ const MAIN_ACTIONS = [
     title: "Voice Talk",
     subtitle: "Speak, listen, and remember",
     emoji: "🎙️",
-    bgClass: "bg-[#DE7A68]",
+    bgClass: "bg-[#1F6F8B]",
     href: "/voice",
   },
   {
@@ -75,7 +75,7 @@ const MAIN_ACTIONS = [
     title: "Get Help",
     subtitle: "Quick help & emergency alerts",
     emoji: "🆘",
-    bgClass: "bg-[#C94A4A]",
+    bgClass: "bg-elder-sos",
   },
 ];
 
@@ -108,16 +108,16 @@ function ActionCard({ action, index, onTap }) {
 
         {/* Text */}
         <div className="min-w-0">
-          <h2 className="text-2xl sm:text-3xl font-bold text-[#FFFFFF] tracking-tight">
+          <h2 className="text-2xl sm:text-3xl font-bold text-elder-card tracking-tight">
             {action.title}
           </h2>
-          <p className="text-base sm:text-lg text-[#FFFFFF] mt-1 font-medium">
+          <p className="text-base sm:text-lg text-elder-card mt-1 font-medium">
             {action.subtitle}
           </p>
         </div>
 
         {/* Arrow */}
-        <div className="flex-shrink-0 ml-auto opacity-90 text-[#FFFFFF]">
+        <div className="flex-shrink-0 ml-auto opacity-90 text-elder-card">
           <svg
             className="w-8 h-8 sm:w-10 sm:h-10"
             fill="none"
@@ -244,7 +244,7 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-dvh flex flex-col relative bg-[#F8F9FA] text-[#2D3748]">
+    <main className="min-h-dvh flex flex-col relative bg-elder-canvas text-elder-text">
       {/* ── Content Container ──────────────────── */}
       <div className="relative z-10 flex flex-col flex-1 w-full max-w-md md:max-w-3xl lg:max-w-5xl mx-auto px-5 sm:px-6 md:px-8 py-6 sm:py-8 md:py-12">
 
@@ -253,14 +253,14 @@ export default function Home() {
           className="flex items-center justify-between mb-8 sm:mb-10"
         >
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-[#2A9D8F] shadow-sm flex items-center justify-center">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-elder-teal shadow-sm flex items-center justify-center">
               <span className="text-lg sm:text-xl">🧠</span>
             </div>
             <div>
-              <p className="text-xs sm:text-sm font-bold text-[#2D3748] tracking-wider uppercase">
+              <p className="text-xs sm:text-sm font-bold text-elder-text tracking-wider uppercase">
                 CARE
               </p>
-              <p className="text-sm font-medium text-[#2D3748]">{currentTime}</p>
+              <p className="text-sm font-medium text-elder-text">{currentTime}</p>
             </div>
           </div>
 
@@ -292,7 +292,7 @@ export default function Home() {
             
             <button
               onClick={handleLogout}
-              className="flex items-center justify-center sm:px-4 px-3 py-2.5 rounded-2xl text-sm font-semibold bg-[#FFFFFF] shadow-sm text-[#2D3748] hover:shadow-md active:scale-95 transition-all whitespace-nowrap gap-1.5"
+              className="flex items-center justify-center sm:px-4 px-3 py-2.5 rounded-2xl text-sm font-semibold bg-elder-card shadow-sm text-elder-text hover:shadow-md active:scale-95 transition-all whitespace-nowrap gap-1.5"
               aria-label="Log out"
               title="Lock App"
             >
@@ -306,10 +306,10 @@ export default function Home() {
         <section
           className="mb-8 sm:mb-10"
         >
-          <p className="text-xl sm:text-2xl text-[#2D3748] font-medium">
+          <p className="text-xl sm:text-2xl text-elder-text font-medium">
             {greeting.emoji} {greeting.text}{profileName ? `, ${profileName}` : ""}
           </p>
-          <h1 className="text-4xl sm:text-5xl font-extrabold mt-1 tracking-tight text-[#2D3748]">
+          <h1 className="text-4xl sm:text-5xl font-extrabold mt-1 tracking-tight text-elder-text">
             Ready to play?
           </h1>
         </section>
@@ -322,13 +322,13 @@ export default function Home() {
           {stats.map((stat, i) => (
             <div
               key={i}
-              className="bg-[#FFFFFF] shadow-sm rounded-2xl p-3 sm:p-4 md:p-6 flex flex-col items-center justify-center text-center"
+              className="bg-elder-card shadow-sm rounded-2xl p-3 sm:p-4 md:p-6 flex flex-col items-center justify-center text-center"
             >
               <span className="text-2xl md:text-3xl mb-1">{stat.icon}</span>
-              <span className="text-[10px] sm:text-xs md:text-sm text-[#2D3748] font-bold tracking-wide uppercase mb-0.5 md:mb-1">
+              <span className="text-[10px] sm:text-xs md:text-sm text-elder-text font-bold tracking-wide uppercase mb-0.5 md:mb-1">
                 {stat.label}
               </span>
-              <span className="text-base sm:text-lg font-black text-[#2D3748]">
+              <span className="text-base sm:text-lg font-black text-elder-text">
                 {stat.value}
               </span>
             </div>
@@ -351,8 +351,8 @@ export default function Home() {
         <footer
           className="mt-8 sm:mt-10 pb-4 text-center"
         >
-          <div className="flex items-center justify-center gap-2 text-xs font-bold text-[#2D3748]">
-            <div className="w-3 h-3 rounded-full bg-[#2A9D8F]" />
+          <div className="flex items-center justify-center gap-2 text-xs font-bold text-elder-text">
+            <div className="w-3 h-3 rounded-full bg-elder-teal" />
             <span>Offline Ready — All data stays on your device</span>
           </div>
         </footer>

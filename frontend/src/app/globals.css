@@ -8,22 +8,14 @@
    ============================================ */
 
 @theme {
-  /* Brand Colors */
-  --color-bg-primary: #0a0e1a;
-  --color-bg-card: #141828;
-  --color-bg-card-hover: #1c2240;
-  --color-surface: #1e2338;
-
-  --color-accent-purple: #7c3aed;
-  --color-accent-pink: #ec4899;
-  --color-accent-gold: #f59e0b;
-  --color-accent-emerald: #10b981;
-  --color-accent-sky: #0ea5e9;
-  --color-accent-red: #ef4444;
-
-  --color-text-primary: #f1f5f9;
-  --color-text-secondary: #94a3b8;
-  --color-text-muted: #64748b;
+  --color-elder-canvas: #F4F8F8;
+  --color-elder-card: #FFFFFF;
+  --color-elder-navy: #0B1E28;
+  --color-elder-teal: #007A78;
+  --color-elder-accent: #D97706;
+  --color-elder-sos: #C83E3E;
+  --color-elder-text: #111827;
+  --color-elder-muted: #4B5563;
 
   /* Elderly-Friendly Sizing */
   --font-size-xl: 1.5rem;

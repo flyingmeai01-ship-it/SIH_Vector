@@ -9,6 +9,7 @@ export default function VoiceTalk() {
   
   const [isRecording, setIsRecording] = useState(false);
   const [transcript, setTranscript] = useState("");
+  const [finalTranscriptText, setFinalTranscriptText] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
   const [diaryEntry, setDiaryEntry] = useState(null);
   const [errorMsg, setErrorMsg] = useState("");
@@ -25,11 +26,29 @@ export default function VoiceTalk() {
       recognition.lang = "en-US";
       
       recognition.onresult = (event) => {
-        let currentTranscript = "";
-        for (let i = 0; i < event.results.length; i++) {
-          currentTranscript += event.results[i][0].transcript + " ";
+        let interimTranscript = "";
+        let finalSegment = "";
+        
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          if (event.results[i].isFinal) {
+            finalSegment += event.results[i][0].transcript + " ";
+          } else {
+            interimTranscript += event.results[i][0].transcript + " ";
+          }
         }
-        setTranscript(currentTranscript);
+        
+        if (finalSegment) {
+          setFinalTranscriptText((prev) => {
+            const newFinal = prev + finalSegment;
+            setTranscript(newFinal + interimTranscript);
+            return newFinal;
+          });
+        } else {
+          setFinalTranscriptText((prev) => {
+            setTranscript(prev + interimTranscript);
+            return prev;
+          });
+        }
       };
       
       recognition.onerror = (event) => {
@@ -57,6 +76,7 @@ export default function VoiceTalk() {
     } else {
       setErrorMsg("");
       setTranscript("");
+      setFinalTranscriptText("");
       setDiaryEntry(null);
       try {
         recognitionRef.current?.start();
@@ -95,12 +115,12 @@ export default function VoiceTalk() {
   };
 
   return (
-    <main className="min-h-dvh flex flex-col relative bg-[#F8F9FA] overflow-hidden">
+    <main className="min-h-dvh flex flex-col relative bg-elder-canvas overflow-hidden">
       <div className="relative z-10 flex flex-col flex-1 w-full max-w-md md:max-w-2xl lg:max-w-4xl mx-auto px-5 py-6 sm:py-8 md:py-12">
         <header className="flex items-center justify-between mb-8">
           <button
             onClick={() => router.push("/")}
-            className="w-12 h-12 bg-[#FFFFFF] shadow-sm rounded-2xl flex items-center justify-center text-[#2D3748] hover:shadow-md transition-all"
+            className="w-12 h-12 bg-elder-card shadow-sm rounded-2xl flex items-center justify-center text-elder-text hover:shadow-md transition-all"
             aria-label="Go Back"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
@@ -109,15 +129,15 @@ export default function VoiceTalk() {
           </button>
           
           <div className="text-center">
-            <h1 className="text-2xl font-black text-[#2D3748] tracking-tight">Voice Talk</h1>
-            <p className="text-sm text-[#2D3748] font-bold">Record your memories 🎙️</p>
+            <h1 className="text-2xl font-black text-elder-text tracking-tight">Voice Talk</h1>
+            <p className="text-sm text-elder-text font-bold">Record your memories 🎙️</p>
           </div>
           
           <div className="w-12 h-12" />
         </header>
 
         {errorMsg && (
-          <div className="bg-red-50 border border-red-200 text-red-800 p-4 rounded-2xl mb-6 text-center text-sm font-bold shadow-sm">
+          <div className="bg-red-50 border border-red-200 text-elder-sos p-4 rounded-2xl mb-6 text-center text-sm font-bold shadow-sm">
             {errorMsg}
           </div>
         )}
@@ -125,13 +145,13 @@ export default function VoiceTalk() {
         {/* State 1: Recording / Text Display */}
         {!diaryEntry && (
           <div className="flex flex-col flex-1">
-            <div className="flex-1 bg-[#FFFFFF] shadow-md rounded-3xl p-6 flex flex-col overflow-y-auto mb-8 min-h-[300px]">
+            <div className="flex-1 bg-elder-card shadow-md rounded-3xl p-6 flex flex-col overflow-y-auto mb-8 min-h-[300px]">
               {transcript ? (
-                <p className="text-xl sm:text-2xl text-[#2D3748] font-bold leading-relaxed">
+                <p className="text-xl sm:text-2xl text-elder-text font-bold leading-relaxed">
                   "{transcript}"
                 </p>
               ) : (
-                <div className="flex-1 flex flex-col items-center justify-center text-[#2D3748] text-center">
+                <div className="flex-1 flex flex-col items-center justify-center text-elder-text text-center">
                   <span className="text-6xl mb-4">🎤</span>
                   <p className="text-lg font-bold">Tap the microphone and start speaking about your day...</p>
                 </div>
@@ -144,8 +164,8 @@ export default function VoiceTalk() {
                 onClick={toggleRecording}
                 className={`w-28 h-28 rounded-full flex items-center justify-center text-5xl transition-all duration-300 ${
                   isRecording 
-                    ? "bg-[#C94A4A] animate-pulse scale-110 shadow-lg text-[#FFFFFF]" 
-                    : "bg-[#2A9D8F] text-[#FFFFFF] shadow-md hover:shadow-lg hover:scale-105"
+                    ? "bg-elder-sos animate-pulse scale-110 shadow-lg text-elder-card" 
+                    : "bg-elder-teal text-elder-card shadow-md hover:shadow-lg hover:scale-105"
                 }`}
                 aria-label={isRecording ? "Stop Recording" : "Start Recording"}
               >
@@ -156,13 +176,13 @@ export default function VoiceTalk() {
                 {transcript && !isRecording && !isProcessing && (
                   <button
                     onClick={generateDiary}
-                    className="px-8 py-4 bg-[#DE7A68] text-[#FFFFFF] font-black rounded-2xl shadow-sm hover:shadow-md animate-fade-in active:scale-95 transition-all"
+                    className="px-8 py-4 bg-elder-teal text-elder-card font-black rounded-2xl shadow-sm hover:shadow-md animate-fade-in active:scale-95 transition-all"
                   >
                     Save to Diary ✨
                   </button>
                 )}
                 {isProcessing && (
-                  <div className="text-[#2D3748] font-bold animate-pulse flex items-center gap-2 h-full">
+                  <div className="text-elder-text font-bold animate-pulse flex items-center gap-2 h-full">
                     <span className="text-xl">✨</span> Gemini is writing your diary...
                   </div>
                 )}
@@ -174,11 +194,11 @@ export default function VoiceTalk() {
         {/* State 2: Diary Generated */}
         {diaryEntry && (
           <div className="flex-1 flex flex-col animate-fade-in">
-            <div className="bg-[#FFFFFF] shadow-md rounded-3xl p-6 sm:p-8 mb-6 flex-1 text-[#2D3748]">
-              <h2 className="text-2xl font-black text-[#2D3748] mb-6 flex items-center gap-2">
+            <div className="bg-elder-card shadow-md rounded-3xl p-6 sm:p-8 mb-6 flex-1 text-elder-text">
+              <h2 className="text-2xl font-black text-elder-text mb-6 flex items-center gap-2">
                 <span>📖</span> Today's Entry
               </h2>
-              <div className="prose prose-slate prose-lg font-bold leading-relaxed text-[#2D3748]" 
+              <div className="prose prose-slate prose-lg font-bold leading-relaxed text-elder-text" 
                    dangerouslySetInnerHTML={{ __html: diaryEntry.replace(/\n/g, '<br/>') }} />
             </div>
             
@@ -186,8 +206,9 @@ export default function VoiceTalk() {
               onClick={() => {
                 setDiaryEntry(null);
                 setTranscript("");
+                setFinalTranscriptText("");
               }}
-              className="w-full py-4 bg-[#DE7A68] text-[#FFFFFF] font-black rounded-2xl shadow-sm hover:shadow-md active:scale-95 transition-all"
+              className="w-full py-4 bg-elder-teal text-elder-card font-black rounded-2xl shadow-sm hover:shadow-md active:scale-95 transition-all"
             >
               Record Another Memory
             </button>
