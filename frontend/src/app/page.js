@@ -72,6 +72,7 @@ const MAIN_ACTIONS = [
     gradient: "from-red-500 via-rose-600 to-red-700",
     shadowColor: "rgba(239, 68, 68, 0.35)",
     borderColor: "rgba(239, 68, 68, 0.3)",
+    href: "/voice",
   },
   {
     id: "help",
