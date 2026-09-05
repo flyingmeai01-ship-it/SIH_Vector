@@ -62,7 +62,7 @@ const MAIN_ACTIONS = [
     gradient: "from-emerald-600 via-green-600 to-teal-700",
     shadowColor: "rgba(16, 185, 129, 0.35)",
     borderColor: "rgba(16, 185, 129, 0.3)",
-    href: "/games/memory",
+    href: "/games",
   },
   {
     id: "voice",

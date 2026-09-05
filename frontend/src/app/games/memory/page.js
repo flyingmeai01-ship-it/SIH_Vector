@@ -4,12 +4,14 @@ import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { saveTelemetry } from "../../../lib/db";
 
-// Emojis for the cards. We need 6 pairs for a 4x3 grid.
-const CARD_EMOJIS = ["🍎", "🚗", "🐶", "🌻", "🎈", "🏠"];
+// 8 Emojis max (16 cards) for Level 3
+const ALL_EMOJIS = ["🍎", "🚗", "🐶", "🌻", "🎈", "🏠", "🍕", "🎸"];
 
-// Helper to shuffle the deck
-function generateDeck() {
-  const deck = [...CARD_EMOJIS, ...CARD_EMOJIS];
+// Helper to shuffle the deck based on level
+function generateDeck(level) {
+  const pairsCount = level === 1 ? 4 : (level === 2 ? 6 : 8);
+  const subset = ALL_EMOJIS.slice(0, pairsCount);
+  const deck = [...subset, ...subset];
   for (let i = deck.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [deck[i], deck[j]] = [deck[j], deck[i]];
@@ -37,14 +39,17 @@ export default function MemoryMatch() {
   const [seconds, setSeconds] = useState(0);
   const timerRef = useRef(null);
 
+  const [level, setLevel] = useState(1);
+  
   // Initialize the game
   useEffect(() => {
-    startNewGame();
+    startNewGame(1);
     return () => clearInterval(timerRef.current);
   }, []);
 
-  const startNewGame = () => {
-    setDeck(generateDeck());
+  const startNewGame = (lvl = 1) => {
+    setLevel(lvl);
+    setDeck(generateDeck(lvl));
     setFlippedCards([]);
     setMoves(0);
     setMatches(0);
@@ -97,7 +102,7 @@ export default function MemoryMatch() {
         setMatches(newMatches);
         
         // Did they win?
-        if (newMatches === CARD_EMOJIS.length) {
+        if (newMatches === newDeck.length / 2) {
           handleWin(newMoves => moves + 1);
         }
       } else {
@@ -156,7 +161,7 @@ export default function MemoryMatch() {
           
           <div className="text-center">
             <h1 className="text-2xl font-bold text-white tracking-tight">Memory Match</h1>
-            <p className="text-sm text-emerald-400 font-medium">Find the pairs</p>
+            <p className="text-sm text-emerald-400 font-medium">Find the pairs • Level {level}</p>
           </div>
           
           {/* Invisible placeholder for centering */}
@@ -175,8 +180,8 @@ export default function MemoryMatch() {
           </div>
         </div>
 
-        {/* ── Game Board (4x3 Grid) ────────────── */}
-        <div className="grid grid-cols-3 gap-4 mb-8 flex-1 content-start">
+        {/* ── Game Board (4-Column Grid) ────────────── */}
+        <div className="grid grid-cols-4 gap-4 mb-8 flex-1 content-start">
           {deck.map((card, index) => (
             <button
               key={card.id}
@@ -231,17 +236,26 @@ export default function MemoryMatch() {
 
               <div className="flex gap-4">
                 <button
-                  onClick={() => router.push("/")}
+                  onClick={() => router.push("/games")}
                   className="flex-1 py-4 rounded-2xl bg-white/10 text-white font-semibold hover:bg-white/20 transition-colors"
                 >
-                  Go Home
+                  Exit
                 </button>
-                <button
-                  onClick={startNewGame}
-                  className="flex-1 py-4 rounded-2xl bg-emerald-500 text-white font-bold hover:bg-emerald-400 shadow-lg shadow-emerald-500/30 transition-all"
-                >
-                  Play Again
-                </button>
+                {level < 3 ? (
+                  <button
+                    onClick={() => startNewGame(level + 1)}
+                    className="flex-1 py-4 rounded-2xl bg-emerald-500 text-white font-bold hover:bg-emerald-400 shadow-lg shadow-emerald-500/30 transition-all"
+                  >
+                    Next Level
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => startNewGame(1)}
+                    className="flex-1 py-4 rounded-2xl bg-emerald-500 text-white font-bold hover:bg-emerald-400 shadow-lg shadow-emerald-500/30 transition-all"
+                  >
+                    Play Again
+                  </button>
+                )}
               </div>
             </div>
           </div>

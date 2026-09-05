@@ -125,3 +125,16 @@ body {
 .transform-style-3d { transform-style: preserve-3d; -webkit-transform-style: preserve-3d; }
 .backface-hidden { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
 .rotate-y-180 { transform: rotateY(180deg); -webkit-transform: rotateY(180deg); }
+
+/* Tea Leaf Plucker Utilities */
+@keyframes linear-fall {
+  0% { transform: translateY(-10vh) rotate(0deg); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+}
+.animate-linear-fall {
+  animation-name: linear-fall;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
