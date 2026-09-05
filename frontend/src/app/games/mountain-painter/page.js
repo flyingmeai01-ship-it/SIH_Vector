@@ -50,14 +50,18 @@ export default function MountainPainter() {
   const audioCtxRef = useRef(null);
   
   const [isDrawing, setIsDrawing] = useState(false);
+  const [hasDrawn, setHasDrawn] = useState(false);
   const [brushColor, setBrushColor] = useState("#2A9D8F"); // Default green
   const [ctx2d, setCtx2d] = useState(null);
 
   const colors = [
-    { label: "Hills", hex: "#2A9D8F" },
-    { label: "River", hex: "#457B9D" },
-    { label: "Clouds", hex: "#F1FAEE" },
-    { label: "Sun", hex: "#E9C46A" },
+    { label: "Terracotta", hex: "#E07A5F" },
+    { label: "Yellow", hex: "#F4A261" },
+    { label: "Sage", hex: "#81B29A" },
+    { label: "Teal", hex: "#2A9D8F" },
+    { label: "Navy", hex: "#3D5A80" },
+    { label: "Plum", hex: "#985277" },
+    { label: "Cream", hex: "#F1FAEE" },
   ];
 
   // Initialize Canvas & Audio
@@ -112,11 +116,12 @@ export default function MountainPainter() {
   const startDrawing = (e) => {
     initAudio();
     setIsDrawing(true);
+    setHasDrawn(true);
     const { x, y } = getCoordinates(e);
     if (ctx2d) {
       ctx2d.beginPath();
       ctx2d.moveTo(x, y);
-      ctx2d.lineWidth = brushColor === "#F1FAEE" ? 40 : 25; // Clouds are fluffier
+      ctx2d.lineWidth = 14; // Uniform comfortable brush size
       ctx2d.strokeStyle = brushColor;
     }
     // Play a chime on initial touch
@@ -143,6 +148,7 @@ export default function MountainPainter() {
   const clearCanvas = () => {
     if (ctx2d && canvasRef.current) {
       ctx2d.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+      setHasDrawn(false);
     }
   };
 
@@ -173,18 +179,17 @@ export default function MountainPainter() {
       </header>
 
       {/* Palette */}
-      <div className="flex justify-center gap-3 p-4 relative z-10">
+      <div className="flex justify-center flex-wrap gap-3 p-4 relative z-10">
         {colors.map(color => (
           <button
             key={color.label}
             onClick={() => setBrushColor(color.hex)}
-            className={`px-4 py-2 rounded-xl font-bold text-sm shadow-sm border-2 transition-transform active:scale-95 ${
+            className={`w-12 h-12 rounded-full shadow-sm border-4 transition-transform active:scale-95 ${
               brushColor === color.hex ? "scale-110 border-elder-navy" : "border-transparent"
             }`}
-            style={{ backgroundColor: color.hex, color: color.hex === "#F1FAEE" || color.hex === "#E9C46A" ? "#0B1E28" : "#fff" }}
-          >
-            {color.label}
-          </button>
+            style={{ backgroundColor: color.hex }}
+            aria-label={`Select ${color.label} color`}
+          />
         ))}
       </div>
 
@@ -203,9 +208,11 @@ export default function MountainPainter() {
         />
         
         {/* Placeholder instruction if canvas is empty */}
-        <div className="absolute inset-0 pointer-events-none flex items-center justify-center opacity-50">
-          <p className="text-xl font-bold text-[#1D3557]">Touch and drag to paint...</p>
-        </div>
+        {!hasDrawn && (
+          <div className="absolute inset-0 pointer-events-none flex items-center justify-center opacity-50">
+            <p className="text-xl font-bold text-[#1D3557]">Touch and drag to paint...</p>
+          </div>
+        )}
       </div>
     </main>
   );
