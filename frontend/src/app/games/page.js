@@ -20,6 +20,22 @@ const GAMES = [
     gradient: "from-emerald-500 to-teal-700",
     href: "/games/tealeaf",
   },
+  {
+    id: "festival-faces",
+    title: "Festival Faces",
+    subtitle: "Identify emotions from warm local festival scenarios.",
+    emoji: "🎭",
+    gradient: "from-amber-500 to-orange-700",
+    href: "/games/festival-faces",
+  },
+  {
+    id: "mountain-painter",
+    title: "Mountain Soundscape",
+    subtitle: "A stress-free canvas where strokes draw nature and play soothing sounds.",
+    emoji: "🏔️",
+    gradient: "from-cyan-500 to-teal-700",
+    href: "/games/mountain-painter",
+  },
 ];
 
 export default function GamesHub() {
