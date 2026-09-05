@@ -59,7 +59,7 @@ const MAIN_ACTIONS = [
     title: "Play Games",
     subtitle: "Train your mind with fun puzzles",
     emoji: "🎮",
-    bgClass: "bg-teal-700",
+    bgClass: "bg-[#2A9D8F]",
     href: "/games",
   },
   {
@@ -67,7 +67,7 @@ const MAIN_ACTIONS = [
     title: "Voice Talk",
     subtitle: "Speak, listen, and remember",
     emoji: "🎙️",
-    bgClass: "bg-[#D96C5B]",
+    bgClass: "bg-[#DE7A68]",
     href: "/voice",
   },
   {
@@ -75,7 +75,7 @@ const MAIN_ACTIONS = [
     title: "Get Help",
     subtitle: "Quick help & emergency alerts",
     emoji: "🆘",
-    bgClass: "bg-red-600",
+    bgClass: "bg-[#C94A4A]",
   },
 ];
 
@@ -89,7 +89,7 @@ function ActionCard({ action, index, onTap }) {
     <div
       className={`
         relative overflow-hidden rounded-3xl p-6 sm:p-8
-        ${action.bgClass} border-2 border-[#2D2D2D]
+        ${action.bgClass} shadow-md
         transition-all duration-300 ease-out
         scale-100 group-hover:scale-[1.02] group-active:scale-[0.97]
       `}
@@ -108,16 +108,16 @@ function ActionCard({ action, index, onTap }) {
 
         {/* Text */}
         <div className="min-w-0">
-          <h2 className="text-2xl sm:text-3xl font-bold text-[#FDFBF7] tracking-tight">
+          <h2 className="text-2xl sm:text-3xl font-bold text-[#FFFFFF] tracking-tight">
             {action.title}
           </h2>
-          <p className="text-base sm:text-lg text-[#FDFBF7] mt-1 font-medium">
+          <p className="text-base sm:text-lg text-[#FFFFFF] mt-1 font-medium">
             {action.subtitle}
           </p>
         </div>
 
         {/* Arrow */}
-        <div className="flex-shrink-0 ml-auto opacity-90 text-[#FDFBF7]">
+        <div className="flex-shrink-0 ml-auto opacity-90 text-[#FFFFFF]">
           <svg
             className="w-8 h-8 sm:w-10 sm:h-10"
             fill="none"
@@ -244,7 +244,7 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-dvh flex flex-col relative bg-[#FDFBF7] text-[#2D2D2D]">
+    <main className="min-h-dvh flex flex-col relative bg-[#F8F9FA] text-[#2D3748]">
       {/* ── Content Container ──────────────────── */}
       <div className="relative z-10 flex flex-col flex-1 w-full max-w-md md:max-w-3xl lg:max-w-5xl mx-auto px-5 sm:px-6 md:px-8 py-6 sm:py-8 md:py-12">
 
@@ -253,27 +253,27 @@ export default function Home() {
           className="flex items-center justify-between mb-8 sm:mb-10"
         >
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-teal-700 flex items-center justify-center border-2 border-[#2D2D2D]">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-[#2A9D8F] shadow-sm flex items-center justify-center">
               <span className="text-lg sm:text-xl">🧠</span>
             </div>
             <div>
-              <p className="text-xs sm:text-sm font-bold text-[#2D2D2D] tracking-wider uppercase">
+              <p className="text-xs sm:text-sm font-bold text-[#2D3748] tracking-wider uppercase">
                 CARE
               </p>
-              <p className="text-sm font-medium text-[#2D2D2D]">{currentTime}</p>
+              <p className="text-sm font-medium text-[#2D3748]">{currentTime}</p>
             </div>
           </div>
 
           {/* Controls: Install + Logout */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             {canInstall && (
               <button
                 id="install-button"
                 onClick={install}
                 className="flex items-center gap-2 px-4 py-2.5 rounded-2xl text-sm font-semibold
-                           bg-gradient-to-r from-purple-600 to-pink-600
-                           text-white shadow-lg shadow-purple-500/25
-                           hover:shadow-purple-500/40 hover:scale-105
+                           bg-[#5C6BC0]
+                           text-white shadow-sm
+                           hover:shadow-md hover:scale-105
                            active:scale-95 transition-all duration-200"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
@@ -292,11 +292,12 @@ export default function Home() {
             
             <button
               onClick={handleLogout}
-              className="flex items-center justify-center w-10 h-10 sm:w-auto sm:px-3 sm:py-2.5 rounded-2xl text-sm font-semibold bg-[#E3D5CA] border-2 border-[#2D2D2D] text-[#2D2D2D] hover:bg-[#d5c3b5] active:scale-95 transition-all"
+              className="flex items-center justify-center sm:px-4 px-3 py-2.5 rounded-2xl text-sm font-semibold bg-[#FFFFFF] shadow-sm text-[#2D3748] hover:shadow-md active:scale-95 transition-all whitespace-nowrap gap-1.5"
               aria-label="Log out"
               title="Lock App"
             >
-              🔒 Logout
+              <span className="text-sm">🔒</span>
+              <span>Logout</span>
             </button>
           </div>
         </header>
@@ -305,10 +306,10 @@ export default function Home() {
         <section
           className="mb-8 sm:mb-10"
         >
-          <p className="text-xl sm:text-2xl text-[#2D2D2D] font-medium">
+          <p className="text-xl sm:text-2xl text-[#2D3748] font-medium">
             {greeting.emoji} {greeting.text}{profileName ? `, ${profileName}` : ""}
           </p>
-          <h1 className="text-4xl sm:text-5xl font-extrabold mt-1 tracking-tight text-[#2D2D2D]">
+          <h1 className="text-4xl sm:text-5xl font-extrabold mt-1 tracking-tight text-[#2D3748]">
             Ready to play?
           </h1>
         </section>
@@ -321,13 +322,13 @@ export default function Home() {
           {stats.map((stat, i) => (
             <div
               key={i}
-              className="bg-[#E3D5CA] border-2 border-[#2D2D2D] rounded-2xl p-3 sm:p-4 md:p-6 flex flex-col items-center justify-center text-center"
+              className="bg-[#FFFFFF] shadow-sm rounded-2xl p-3 sm:p-4 md:p-6 flex flex-col items-center justify-center text-center"
             >
               <span className="text-2xl md:text-3xl mb-1">{stat.icon}</span>
-              <span className="text-[10px] sm:text-xs md:text-sm text-[#2D2D2D] font-bold tracking-wide uppercase mb-0.5 md:mb-1">
+              <span className="text-[10px] sm:text-xs md:text-sm text-[#2D3748] font-bold tracking-wide uppercase mb-0.5 md:mb-1">
                 {stat.label}
               </span>
-              <span className="text-base sm:text-lg font-black text-[#2D2D2D]">
+              <span className="text-base sm:text-lg font-black text-[#2D3748]">
                 {stat.value}
               </span>
             </div>
@@ -350,8 +351,8 @@ export default function Home() {
         <footer
           className="mt-8 sm:mt-10 pb-4 text-center"
         >
-          <div className="flex items-center justify-center gap-2 text-xs font-bold text-[#2D2D2D]">
-            <div className="w-3 h-3 rounded-full bg-teal-700 border border-[#2D2D2D]" />
+          <div className="flex items-center justify-center gap-2 text-xs font-bold text-[#2D3748]">
+            <div className="w-3 h-3 rounded-full bg-[#2A9D8F]" />
             <span>Offline Ready — All data stays on your device</span>
           </div>
         </footer>

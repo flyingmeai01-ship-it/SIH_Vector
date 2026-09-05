@@ -32,61 +32,61 @@ export default function Register() {
   };
 
   return (
-    <main className="min-h-dvh flex items-center justify-center bg-[#FDFBF7] px-5 py-8">
-      <div className="w-full max-w-md bg-[#E3D5CA] border-2 border-[#2D2D2D] rounded-3xl p-8 shadow-none">
+    <main className="min-h-dvh flex items-center justify-center bg-[#F8F9FA] px-5 py-8">
+      <div className="w-full max-w-md bg-[#FFFFFF] shadow-md rounded-3xl p-8">
         <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-teal-700 border-2 border-[#2D2D2D] rounded-2xl mx-auto flex items-center justify-center text-3xl mb-4">
+          <div className="w-16 h-16 bg-[#2A9D8F] shadow-sm rounded-2xl mx-auto flex items-center justify-center text-3xl mb-4">
             🛡️
           </div>
-          <h1 className="text-2xl font-black text-[#2D2D2D]">Create Account</h1>
-          <p className="text-sm font-bold text-[#2D2D2D] mt-2">Set up your secure local vault</p>
+          <h1 className="text-2xl font-black text-[#2D3748]">Create Account</h1>
+          <p className="text-sm font-bold text-[#2D3748] mt-2">Set up your secure local vault</p>
         </div>
 
         <form onSubmit={handleRegister} className="space-y-5">
           <div>
-            <label className="block text-sm font-bold text-[#2D2D2D] mb-1.5">First Name</label>
+            <label className="block text-sm font-bold text-[#2D3748] mb-1.5">First Name</label>
             <input
               type="text"
               required
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full bg-[#FDFBF7] border-2 border-[#2D2D2D] rounded-xl px-4 py-3 text-[#2D2D2D] placeholder-gray-500 focus:outline-none focus:border-teal-700 transition-all"
+              className="w-full bg-[#F8F9FA] border border-[#2D3748]/20 shadow-inner rounded-xl px-4 py-3 text-[#2D3748] placeholder-gray-500 focus:outline-none focus:border-[#2A9D8F] transition-all"
               placeholder="e.g. Robert"
             />
           </div>
           
           <div>
-            <label className="block text-sm font-bold text-[#2D2D2D] mb-1.5">Caregiver's Phone (Optional)</label>
+            <label className="block text-sm font-bold text-[#2D3748] mb-1.5">Caregiver's Phone (Optional)</label>
             <input
               type="tel"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
-              className="w-full bg-[#FDFBF7] border-2 border-[#2D2D2D] rounded-xl px-4 py-3 text-[#2D2D2D] placeholder-gray-500 focus:outline-none focus:border-teal-700 transition-all"
+              className="w-full bg-[#F8F9FA] border border-[#2D3748]/20 shadow-inner rounded-xl px-4 py-3 text-[#2D3748] placeholder-gray-500 focus:outline-none focus:border-[#2A9D8F] transition-all"
               placeholder="For emergency alerts"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-bold text-[#2D2D2D] mb-1.5">Secure Password</label>
+            <label className="block text-sm font-bold text-[#2D3748] mb-1.5">Secure Password</label>
             <input
               type="password"
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full bg-[#FDFBF7] border-2 border-[#2D2D2D] rounded-xl px-4 py-3 text-[#2D2D2D] placeholder-gray-500 focus:outline-none focus:border-teal-700 transition-all"
+              className="w-full bg-[#F8F9FA] border border-[#2D3748]/20 shadow-inner rounded-xl px-4 py-3 text-[#2D3748] placeholder-gray-500 focus:outline-none focus:border-[#2A9D8F] transition-all"
               placeholder="••••••••"
             />
           </div>
 
           <button
             type="submit"
-            className="w-full py-4 bg-teal-700 text-[#FDFBF7] border-2 border-[#2D2D2D] font-bold rounded-xl hover:bg-teal-800 active:scale-95 transition-all mt-4"
+            className="w-full py-4 bg-[#2A9D8F] text-[#FFFFFF] shadow-sm font-bold rounded-xl hover:shadow-md hover:bg-[#1f7c70] active:scale-95 transition-all mt-4"
           >
             Create Local Account
           </button>
         </form>
         
-        <p className="text-xs text-center font-bold text-[#2D2D2D] mt-6">
+        <p className="text-xs text-center font-bold text-[#2D3748] mt-6">
           Your data is encrypted and stored locally on this device.
         </p>
       </div>

@@ -95,12 +95,12 @@ export default function VoiceTalk() {
   };
 
   return (
-    <main className="min-h-dvh flex flex-col relative bg-[#FDFBF7] overflow-hidden">
+    <main className="min-h-dvh flex flex-col relative bg-[#F8F9FA] overflow-hidden">
       <div className="relative z-10 flex flex-col flex-1 w-full max-w-md md:max-w-2xl lg:max-w-4xl mx-auto px-5 py-6 sm:py-8 md:py-12">
         <header className="flex items-center justify-between mb-8">
           <button
             onClick={() => router.push("/")}
-            className="w-12 h-12 bg-[#E3D5CA] border-2 border-[#2D2D2D] rounded-2xl flex items-center justify-center text-[#2D2D2D] hover:bg-[#d5c3b5] transition-colors"
+            className="w-12 h-12 bg-[#FFFFFF] shadow-sm rounded-2xl flex items-center justify-center text-[#2D3748] hover:shadow-md transition-all"
             aria-label="Go Back"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
@@ -109,15 +109,15 @@ export default function VoiceTalk() {
           </button>
           
           <div className="text-center">
-            <h1 className="text-2xl font-black text-[#2D2D2D] tracking-tight">Voice Talk</h1>
-            <p className="text-sm text-[#2D2D2D] font-bold">Record your memories 🎙️</p>
+            <h1 className="text-2xl font-black text-[#2D3748] tracking-tight">Voice Talk</h1>
+            <p className="text-sm text-[#2D3748] font-bold">Record your memories 🎙️</p>
           </div>
           
           <div className="w-12 h-12" />
         </header>
 
         {errorMsg && (
-          <div className="bg-red-200 border-2 border-red-600 text-red-800 p-4 rounded-2xl mb-6 text-center text-sm font-bold">
+          <div className="bg-red-50 border border-red-200 text-red-800 p-4 rounded-2xl mb-6 text-center text-sm font-bold shadow-sm">
             {errorMsg}
           </div>
         )}
@@ -125,13 +125,13 @@ export default function VoiceTalk() {
         {/* State 1: Recording / Text Display */}
         {!diaryEntry && (
           <div className="flex flex-col flex-1">
-            <div className="flex-1 bg-[#E3D5CA] rounded-3xl border-2 border-[#2D2D2D] p-6 flex flex-col shadow-none overflow-y-auto mb-8 min-h-[300px]">
+            <div className="flex-1 bg-[#FFFFFF] shadow-md rounded-3xl p-6 flex flex-col overflow-y-auto mb-8 min-h-[300px]">
               {transcript ? (
-                <p className="text-xl sm:text-2xl text-[#2D2D2D] font-bold leading-relaxed">
+                <p className="text-xl sm:text-2xl text-[#2D3748] font-bold leading-relaxed">
                   "{transcript}"
                 </p>
               ) : (
-                <div className="flex-1 flex flex-col items-center justify-center text-[#2D2D2D] text-center">
+                <div className="flex-1 flex flex-col items-center justify-center text-[#2D3748] text-center">
                   <span className="text-6xl mb-4">🎤</span>
                   <p className="text-lg font-bold">Tap the microphone and start speaking about your day...</p>
                 </div>
@@ -142,10 +142,10 @@ export default function VoiceTalk() {
             <div className="flex flex-col items-center gap-6 pb-6">
               <button
                 onClick={toggleRecording}
-                className={`w-28 h-28 rounded-full border-2 border-[#2D2D2D] flex items-center justify-center text-5xl transition-all duration-300 ${
+                className={`w-28 h-28 rounded-full flex items-center justify-center text-5xl transition-all duration-300 ${
                   isRecording 
-                    ? "bg-red-600 animate-pulse scale-110" 
-                    : "bg-teal-700 text-[#FDFBF7] hover:scale-105"
+                    ? "bg-[#C94A4A] animate-pulse scale-110 shadow-lg text-[#FFFFFF]" 
+                    : "bg-[#2A9D8F] text-[#FFFFFF] shadow-md hover:shadow-lg hover:scale-105"
                 }`}
                 aria-label={isRecording ? "Stop Recording" : "Start Recording"}
               >
@@ -156,13 +156,13 @@ export default function VoiceTalk() {
                 {transcript && !isRecording && !isProcessing && (
                   <button
                     onClick={generateDiary}
-                    className="px-8 py-4 bg-[#D96C5B] text-[#FDFBF7] font-black border-2 border-[#2D2D2D] rounded-2xl shadow-none animate-fade-in hover:bg-rose-500 active:scale-95 transition-all"
+                    className="px-8 py-4 bg-[#DE7A68] text-[#FFFFFF] font-black rounded-2xl shadow-sm hover:shadow-md animate-fade-in active:scale-95 transition-all"
                   >
                     Save to Diary ✨
                   </button>
                 )}
                 {isProcessing && (
-                  <div className="text-[#2D2D2D] font-bold animate-pulse flex items-center gap-2 h-full">
+                  <div className="text-[#2D3748] font-bold animate-pulse flex items-center gap-2 h-full">
                     <span className="text-xl">✨</span> Gemini is writing your diary...
                   </div>
                 )}
@@ -174,11 +174,11 @@ export default function VoiceTalk() {
         {/* State 2: Diary Generated */}
         {diaryEntry && (
           <div className="flex-1 flex flex-col animate-fade-in">
-            <div className="bg-[#E3D5CA] rounded-3xl border-2 border-[#2D2D2D] p-6 sm:p-8 mb-6 flex-1 text-[#2D2D2D]">
-              <h2 className="text-2xl font-black text-[#2D2D2D] mb-6 flex items-center gap-2">
+            <div className="bg-[#FFFFFF] shadow-md rounded-3xl p-6 sm:p-8 mb-6 flex-1 text-[#2D3748]">
+              <h2 className="text-2xl font-black text-[#2D3748] mb-6 flex items-center gap-2">
                 <span>📖</span> Today's Entry
               </h2>
-              <div className="prose prose-slate prose-lg font-bold leading-relaxed" 
+              <div className="prose prose-slate prose-lg font-bold leading-relaxed text-[#2D3748]" 
                    dangerouslySetInnerHTML={{ __html: diaryEntry.replace(/\n/g, '<br/>') }} />
             </div>
             
@@ -187,7 +187,7 @@ export default function VoiceTalk() {
                 setDiaryEntry(null);
                 setTranscript("");
               }}
-              className="w-full py-4 bg-[#D96C5B] text-[#FDFBF7] font-black border-2 border-[#2D2D2D] rounded-2xl shadow-none hover:bg-rose-500 active:scale-95 transition-all"
+              className="w-full py-4 bg-[#DE7A68] text-[#FFFFFF] font-black rounded-2xl shadow-sm hover:shadow-md active:scale-95 transition-all"
             >
               Record Another Memory
             </button>
