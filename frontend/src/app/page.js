@@ -160,7 +160,17 @@ export default function Home() {
   const router = useRouter();
   const [greeting, setGreeting] = useState({ text: "Welcome", emoji: "👋" });
   const [profileName, setProfileName] = useState("");
+  const [showSplash, setShowSplash] = useState(false);
   
+  useEffect(() => {
+    if (!sessionStorage.getItem("care_splashed")) {
+      setShowSplash(true);
+      sessionStorage.setItem("care_splashed", "true");
+      const timer = setTimeout(() => setShowSplash(false), 1200);
+      return () => clearTimeout(timer);
+    }
+  }, []);
+
   useEffect(() => {
     const storedProfile = localStorage.getItem("care_profile");
     if (!storedProfile) {
@@ -245,6 +255,18 @@ export default function Home() {
 
   return (
     <main className="min-h-dvh flex flex-col relative bg-elder-canvas text-elder-text">
+      {/* ── Entry Splash Screen ─────────────── */}
+      {showSplash && (
+        <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-elder-canvas animate-splash-fade-out pointer-events-none">
+          <div className="animate-splash-logo-pop flex flex-col items-center">
+            <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-3xl bg-elder-teal shadow-xl flex items-center justify-center mb-6">
+              <span className="text-5xl sm:text-7xl">🧠</span>
+            </div>
+            <h1 className="text-4xl sm:text-5xl font-black text-elder-navy tracking-tight">CARE</h1>
+          </div>
+        </div>
+      )}
+
       {/* ── Content Container ──────────────────── */}
       <div className="relative z-10 flex flex-col flex-1 w-full max-w-md md:max-w-3xl lg:max-w-5xl mx-auto px-5 sm:px-6 md:px-8 py-6 sm:py-8 md:py-12">
 
