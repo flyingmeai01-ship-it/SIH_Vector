@@ -184,10 +184,29 @@ function ActionCard({ action, index, onTap }) {
 export default function Home() {
   const router = useRouter();
   const [greeting, setGreeting] = useState({ text: "Welcome", emoji: "👋" });
+  const [profileName, setProfileName] = useState("");
   
   useEffect(() => {
+    const storedProfile = localStorage.getItem("care_profile");
+    if (!storedProfile) {
+      router.replace("/register");
+      return;
+    }
+    const auth = localStorage.getItem("care_auth");
+    if (auth !== "true") {
+      router.replace("/login");
+      return;
+    }
+
+    try {
+      const parsed = JSON.parse(storedProfile);
+      if (parsed.name) {
+        setProfileName(parsed.name);
+      }
+    } catch (e) {}
+
     setGreeting(getGreeting());
-  }, []);
+  }, [router]);
   const { canInstall, install, isInstalled } = useInstallPrompt();
   const [currentTime, setCurrentTime] = useState("");
   const [activeAction, setActiveAction] = useState(null);
@@ -244,6 +263,11 @@ export default function Home() {
     setTimeout(() => setActiveAction(null), 800);
   };
 
+  const handleLogout = () => {
+    localStorage.setItem("care_auth", "false");
+    router.replace("/login");
+  };
+
   return (
     <main className="min-h-dvh flex flex-col relative overflow-hidden">
       {/* ── Ambient Background ─────────────────── */}
@@ -295,30 +319,41 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Install button */}
-          {canInstall && (
-            <button
-              id="install-button"
-              onClick={install}
-              className="flex items-center gap-2 px-4 py-2.5 rounded-2xl text-sm font-semibold
-                         bg-gradient-to-r from-purple-600 to-pink-600
-                         text-white shadow-lg shadow-purple-500/25
-                         hover:shadow-purple-500/40 hover:scale-105
-                         active:scale-95 transition-all duration-200"
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M12 4v12m0 0l-4-4m4 4l4-4" />
-              </svg>
-              Install App
-            </button>
-          )}
+          {/* Controls: Install + Logout */}
+          <div className="flex items-center gap-2">
+            {canInstall && (
+              <button
+                id="install-button"
+                onClick={install}
+                className="flex items-center gap-2 px-4 py-2.5 rounded-2xl text-sm font-semibold
+                           bg-gradient-to-r from-purple-600 to-pink-600
+                           text-white shadow-lg shadow-purple-500/25
+                           hover:shadow-purple-500/40 hover:scale-105
+                           active:scale-95 transition-all duration-200"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M12 4v12m0 0l-4-4m4 4l4-4" />
+                </svg>
+                Install App
+              </button>
+            )}
 
-          {isInstalled && (
-            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
-              <span className="text-xs">✅</span>
-              <span className="text-xs font-medium text-emerald-400">Installed</span>
-            </div>
-          )}
+            {isInstalled && (
+              <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 hidden sm:flex">
+                <span className="text-xs">✅</span>
+                <span className="text-xs font-medium text-emerald-400">Installed</span>
+              </div>
+            )}
+            
+            <button
+              onClick={handleLogout}
+              className="flex items-center justify-center w-10 h-10 sm:w-auto sm:px-3 sm:py-2.5 rounded-2xl text-sm font-semibold bg-white/5 border border-white/10 text-rose-300 hover:bg-white/10 active:scale-95 transition-all"
+              aria-label="Log out"
+              title="Lock App"
+            >
+              🔒
+            </button>
+          </div>
         </header>
 
         {/* ── Greeting Section ─────────────────── */}
@@ -327,7 +362,7 @@ export default function Home() {
           style={{ animation: "fade-in-up 0.6s ease-out 100ms both" }}
         >
           <p className="text-lg sm:text-xl text-slate-400 font-light">
-            {greeting.emoji} {greeting.text}
+            {greeting.emoji} {greeting.text}{profileName ? `, ${profileName}` : ""}
           </p>
           <h1 className="text-4xl sm:text-5xl font-bold mt-1 tracking-tight">
             <span
