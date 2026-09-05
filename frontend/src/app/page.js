@@ -275,7 +275,7 @@ export default function Home() {
       </div>
 
       {/* ── Content Container ──────────────────── */}
-      <div className="relative z-10 flex flex-col flex-1 w-full max-w-lg mx-auto px-5 sm:px-6 py-6 sm:py-8">
+      <div className="relative z-10 flex flex-col flex-1 w-full max-w-md md:max-w-3xl lg:max-w-5xl mx-auto px-5 sm:px-6 md:px-8 py-6 sm:py-8 md:py-12">
 
         {/* ── Top Bar: Time + Install ──────────── */}
         <header
@@ -345,16 +345,16 @@ export default function Home() {
 
         {/* ── Quick Stats Row ──────────────────── */}
         <section
-          className="grid grid-cols-3 gap-3 sm:gap-4 delay-300 fill-mode-both" style={{ animation: "fade-in-up 0.6s ease-out" }}
+          className="grid grid-cols-3 gap-3 sm:gap-4 md:gap-6 delay-300 fill-mode-both" style={{ animation: "fade-in-up 0.6s ease-out" }}
           aria-label="Quick statistics"
         >
           {stats.map((stat, i) => (
             <div
               key={i}
-              className="bg-[#141828] border border-white/5 rounded-2xl p-3 sm:p-4 flex flex-col items-center justify-center text-center shadow-lg"
+              className="bg-[#141828] border border-white/5 rounded-2xl p-3 sm:p-4 md:p-6 flex flex-col items-center justify-center text-center shadow-lg"
             >
-              <span className="text-2xl mb-1 filter drop-shadow-sm">{stat.icon}</span>
-              <span className="text-[10px] sm:text-xs text-slate-400 font-medium tracking-wide uppercase mb-0.5">
+              <span className="text-2xl md:text-3xl mb-1 filter drop-shadow-sm">{stat.icon}</span>
+              <span className="text-[10px] sm:text-xs md:text-sm text-slate-400 font-medium tracking-wide uppercase mb-0.5 md:mb-1">
                 {stat.label}
               </span>
               <span className="text-base sm:text-lg font-bold text-white">
@@ -365,7 +365,7 @@ export default function Home() {
         </section>
 
         {/* ── Main Action Cards ────────────────── */}
-        <section className="flex flex-col gap-4 sm:gap-5 flex-1" aria-label="Main actions">
+        <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6 flex-1" aria-label="Main actions">
           {MAIN_ACTIONS.map((action, i) => (
             <ActionCard
               key={action.id}
