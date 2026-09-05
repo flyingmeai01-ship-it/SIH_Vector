@@ -162,11 +162,8 @@ export default function TeaLeafPlucker() {
   };
 
   return (
-    <main className="min-h-dvh flex flex-col relative overflow-hidden bg-emerald-950">
-      {/* ── Background ───────────────────────────── */}
-      <div className="fixed inset-0 pointer-events-none" aria-hidden="true">
-        <div className="absolute top-[20%] left-[50%] -translate-x-1/2 w-[800px] h-[800px] rounded-full opacity-10 blur-3xl bg-green-400" />
-      </div>
+    <main className="min-h-dvh flex flex-col relative overflow-hidden bg-[#FDFBF7]">
+
 
       <div className="relative z-10 flex flex-col flex-1 w-full max-w-lg mx-auto px-4 sm:px-6 py-6 sm:py-8 pointer-events-none">
         
@@ -174,7 +171,7 @@ export default function TeaLeafPlucker() {
         <header className="flex items-center justify-between mb-6 pointer-events-auto">
           <button
             onClick={() => router.push("/games")}
-            className="w-12 h-12 bg-white/10 border border-white/20 rounded-2xl flex items-center justify-center text-white/90 hover:bg-white/20 hover:text-white transition-colors backdrop-blur-md"
+            className="w-12 h-12 bg-[#E3D5CA] border-2 border-[#2D2D2D] rounded-2xl flex items-center justify-center text-[#2D2D2D] hover:bg-[#d5c3b5] transition-colors"
             aria-label="Go Back"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
@@ -183,22 +180,22 @@ export default function TeaLeafPlucker() {
           </button>
           
           <div className="text-center">
-            <h1 className="text-2xl font-bold text-white tracking-tight">Tea Leaf Plucker</h1>
-            <p className="text-sm text-green-300 font-medium">Tap the fresh leaves 🌱 • Level {score >= 1000 ? 3 : (score >= 500 ? 2 : 1)}</p>
+            <h1 className="text-2xl font-black text-[#2D2D2D] tracking-tight">Tea Leaf Plucker</h1>
+            <p className="text-sm text-[#2D2D2D] font-bold">Tap the fresh leaves 🌱 • Level {score >= 1000 ? 3 : (score >= 500 ? 2 : 1)}</p>
           </div>
           
           <div className="w-12 h-12" />
         </header>
 
         {/* ── Stats Row ────────────────────────── */}
-        <div className="flex justify-between items-center px-6 py-4 bg-black/30 backdrop-blur-md rounded-2xl border border-white/10 shadow-xl pointer-events-auto">
+        <div className="flex justify-between items-center px-6 py-4 bg-[#E3D5CA] border-2 border-[#2D2D2D] rounded-2xl shadow-none pointer-events-auto">
           <div className="flex flex-col">
-            <span className="text-xs text-green-300 uppercase tracking-wider font-bold">Score</span>
-            <span className="text-3xl font-black text-white drop-shadow-md">{score}</span>
+            <span className="text-xs text-[#2D2D2D] uppercase tracking-wider font-bold">Score</span>
+            <span className="text-3xl font-black text-[#2D2D2D]">{score}</span>
           </div>
           <div className="flex flex-col text-right">
-            <span className="text-xs text-green-300 uppercase tracking-wider font-bold">Time Left</span>
-            <span className={`text-3xl font-black drop-shadow-md ${timeLeft <= 10 ? 'text-red-400 animate-pulse' : 'text-white'}`}>
+            <span className="text-xs text-[#2D2D2D] uppercase tracking-wider font-bold">Time Left</span>
+            <span className={`text-3xl font-black ${timeLeft <= 10 ? 'text-red-600 animate-pulse' : 'text-[#2D2D2D]'}`}>
               {timeLeft}s
             </span>
           </div>
@@ -237,7 +234,7 @@ export default function TeaLeafPlucker() {
         {floatingTexts.map(t => (
           <div
             key={t.id}
-            className="absolute text-3xl md:text-4xl font-black text-green-300 drop-shadow-xl animate-float-up whitespace-nowrap"
+            className="absolute text-3xl md:text-4xl font-black text-teal-700 animate-float-up whitespace-nowrap"
             style={{ left: t.x, top: t.y }}
           >
             {t.text}
@@ -247,15 +244,15 @@ export default function TeaLeafPlucker() {
 
       {/* ── Win Overlay ──────────────────────── */}
       {gameState === "won" && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-lg p-6 animate-fade-in pointer-events-auto">
-          <div className="bg-[#0f1c16] rounded-3xl p-8 shadow-2xl text-center max-w-sm w-full border border-green-500/30 animate-scale-in">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#FDFBF7]/90 backdrop-blur-sm p-6 animate-fade-in pointer-events-auto">
+          <div className="bg-[#E3D5CA] rounded-3xl p-8 shadow-none text-center max-w-sm w-full border-2 border-[#2D2D2D] animate-scale-in">
             <span className="text-7xl block mb-4">🏆</span>
-            <h2 className="text-3xl font-black text-white mb-2">Time's Up!</h2>
-            <p className="text-green-100/70 text-lg mb-6">Let's see how much tea you plucked.</p>
+            <h2 className="text-3xl font-black text-[#2D2D2D] mb-2">Time's Up!</h2>
+            <p className="text-[#2D2D2D] font-bold text-lg mb-6">Let's see how much tea you plucked.</p>
             
-            <div className="bg-black/40 rounded-2xl p-6 mb-8 border border-white/5">
-              <p className="text-sm text-green-400/80 uppercase tracking-widest font-bold">Final Score</p>
-              <p className="text-6xl font-black text-green-400 my-2 drop-shadow-lg">
+            <div className="bg-[#FDFBF7] rounded-2xl p-6 mb-8 border-2 border-[#2D2D2D]">
+              <p className="text-sm text-[#2D2D2D] uppercase tracking-widest font-bold">Final Score</p>
+              <p className="text-6xl font-black text-[#2D2D2D] my-2">
                 {score}
               </p>
             </div>
@@ -263,13 +260,13 @@ export default function TeaLeafPlucker() {
             <div className="flex gap-4">
               <button
                 onClick={() => router.push("/games")}
-                className="flex-1 py-4 rounded-2xl bg-white/5 text-white font-bold hover:bg-white/10 transition-colors"
+                className="flex-1 py-4 rounded-2xl bg-[#FDFBF7] border-2 border-[#2D2D2D] text-[#2D2D2D] font-bold hover:bg-[#d5c3b5] transition-colors"
               >
                 Exit
               </button>
               <button
                 onClick={startGame}
-                className="flex-1 py-4 rounded-2xl bg-green-500 text-black font-black hover:bg-green-400 shadow-lg shadow-green-500/20 transition-all active:scale-95"
+                className="flex-1 py-4 rounded-2xl bg-teal-700 border-2 border-[#2D2D2D] text-[#FDFBF7] font-black hover:bg-teal-800 transition-all active:scale-95"
               >
                 Play Again
               </button>

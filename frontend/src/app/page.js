@@ -59,9 +59,7 @@ const MAIN_ACTIONS = [
     title: "Play Games",
     subtitle: "Train your mind with fun puzzles",
     emoji: "🎮",
-    gradient: "from-emerald-600 via-green-600 to-teal-700",
-    shadowColor: "rgba(16, 185, 129, 0.35)",
-    borderColor: "rgba(16, 185, 129, 0.3)",
+    bgClass: "bg-teal-700",
     href: "/games",
   },
   {
@@ -69,9 +67,7 @@ const MAIN_ACTIONS = [
     title: "Voice Talk",
     subtitle: "Speak, listen, and remember",
     emoji: "🎙️",
-    gradient: "from-red-500 via-rose-600 to-red-700",
-    shadowColor: "rgba(239, 68, 68, 0.35)",
-    borderColor: "rgba(239, 68, 68, 0.3)",
+    bgClass: "bg-[#D96C5B]",
     href: "/voice",
   },
   {
@@ -79,9 +75,7 @@ const MAIN_ACTIONS = [
     title: "Get Help",
     subtitle: "Quick help & emergency alerts",
     emoji: "🆘",
-    gradient: "from-yellow-500 via-amber-500 to-orange-500",
-    shadowColor: "rgba(234, 179, 8, 0.35)",
-    borderColor: "rgba(234, 179, 8, 0.3)",
+    bgClass: "bg-red-600",
   },
 ];
 
@@ -95,35 +89,16 @@ function ActionCard({ action, index, onTap }) {
     <div
       className={`
         relative overflow-hidden rounded-3xl p-6 sm:p-8
-        bg-gradient-to-br ${action.gradient}
+        ${action.bgClass} border-2 border-[#2D2D2D]
         transition-all duration-300 ease-out
         scale-100 group-hover:scale-[1.02] group-active:scale-[0.97]
       `}
-      style={{
-        boxShadow: `0 8px 40px ${action.shadowColor}`,
-        border: `1px solid ${action.borderColor}`,
-      }}
     >
-      {/* Glass overlay pattern */}
-      <div className="absolute inset-0 opacity-10">
-        <div
-          className="absolute -top-1/2 -right-1/2 w-full h-full rounded-full"
-          style={{
-            background:
-              "radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%)",
-          }}
-        />
-      </div>
-
       <div className="relative flex items-center gap-5 sm:gap-6">
         {/* Emoji icon */}
         <div className="flex-shrink-0">
           <span
             className="text-5xl sm:text-6xl block"
-            style={{
-              filter: "drop-shadow(0 4px 8px rgba(0,0,0,0.3))",
-              animation: `float 4s ease-in-out ${index * 0.5}s infinite`,
-            }}
             role="img"
             aria-hidden="true"
           >
@@ -133,16 +108,16 @@ function ActionCard({ action, index, onTap }) {
 
         {/* Text */}
         <div className="min-w-0">
-          <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+          <h2 className="text-2xl sm:text-3xl font-bold text-[#FDFBF7] tracking-tight">
             {action.title}
           </h2>
-          <p className="text-base sm:text-lg text-white/75 mt-1 font-light">
+          <p className="text-base sm:text-lg text-[#FDFBF7] mt-1 font-medium">
             {action.subtitle}
           </p>
         </div>
 
         {/* Arrow */}
-        <div className="flex-shrink-0 ml-auto opacity-60">
+        <div className="flex-shrink-0 ml-auto opacity-90 text-[#FDFBF7]">
           <svg
             className="w-8 h-8 sm:w-10 sm:h-10"
             fill="none"
@@ -159,7 +134,7 @@ function ActionCard({ action, index, onTap }) {
 
   const commonProps = {
     id: `action-${action.id}`,
-    className: "group w-full text-left focus:outline-none focus-visible:ring-4 focus-visible:ring-purple-400/50 rounded-3xl block",
+    className: "group w-full text-left focus:outline-none focus-visible:ring-4 focus-visible:ring-teal-700/50 rounded-3xl block",
     style: { animation: `fade-in-up 0.7s ease-out ${150 + index * 120}ms both` },
     "aria-label": `${action.title}: ${action.subtitle}`
   };
@@ -269,53 +244,23 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-dvh flex flex-col relative overflow-hidden">
-      {/* ── Ambient Background ─────────────────── */}
-      <div className="fixed inset-0 pointer-events-none" aria-hidden="true">
-        {/* Gradient orbs */}
-        <div
-          className="absolute top-[-20%] left-[-10%] w-[500px] h-[500px] rounded-full opacity-20 blur-3xl"
-          style={{
-            background:
-              "radial-gradient(circle, rgba(124,58,237,0.6) 0%, transparent 70%)",
-            animation: "float 8s ease-in-out infinite",
-          }}
-        />
-        <div
-          className="absolute bottom-[-10%] right-[-10%] w-[400px] h-[400px] rounded-full opacity-15 blur-3xl"
-          style={{
-            background:
-              "radial-gradient(circle, rgba(236,72,153,0.5) 0%, transparent 70%)",
-            animation: "float 10s ease-in-out 2s infinite",
-          }}
-        />
-        <div
-          className="absolute top-[40%] right-[20%] w-[300px] h-[300px] rounded-full opacity-10 blur-3xl"
-          style={{
-            background:
-              "radial-gradient(circle, rgba(245,158,11,0.5) 0%, transparent 70%)",
-            animation: "float 12s ease-in-out 4s infinite",
-          }}
-        />
-      </div>
-
+    <main className="min-h-dvh flex flex-col relative bg-[#FDFBF7] text-[#2D2D2D]">
       {/* ── Content Container ──────────────────── */}
       <div className="relative z-10 flex flex-col flex-1 w-full max-w-md md:max-w-3xl lg:max-w-5xl mx-auto px-5 sm:px-6 md:px-8 py-6 sm:py-8 md:py-12">
 
         {/* ── Top Bar: Time + Install ──────────── */}
         <header
           className="flex items-center justify-between mb-8 sm:mb-10"
-          style={{ animation: "fade-in-up 0.5s ease-out both" }}
         >
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center shadow-lg shadow-purple-500/20">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-teal-700 flex items-center justify-center border-2 border-[#2D2D2D]">
               <span className="text-lg sm:text-xl">🧠</span>
             </div>
             <div>
-              <p className="text-xs sm:text-sm font-medium text-purple-300 tracking-wider uppercase">
+              <p className="text-xs sm:text-sm font-bold text-[#2D2D2D] tracking-wider uppercase">
                 CARE
               </p>
-              <p className="text-sm text-slate-400">{currentTime}</p>
+              <p className="text-sm font-medium text-[#2D2D2D]">{currentTime}</p>
             </div>
           </div>
 
@@ -347,11 +292,11 @@ export default function Home() {
             
             <button
               onClick={handleLogout}
-              className="flex items-center justify-center w-10 h-10 sm:w-auto sm:px-3 sm:py-2.5 rounded-2xl text-sm font-semibold bg-white/5 border border-white/10 text-rose-300 hover:bg-white/10 active:scale-95 transition-all"
+              className="flex items-center justify-center w-10 h-10 sm:w-auto sm:px-3 sm:py-2.5 rounded-2xl text-sm font-semibold bg-[#E3D5CA] border-2 border-[#2D2D2D] text-[#2D2D2D] hover:bg-[#d5c3b5] active:scale-95 transition-all"
               aria-label="Log out"
               title="Lock App"
             >
-              🔒
+              🔒 Logout
             </button>
           </div>
         </header>
@@ -359,41 +304,30 @@ export default function Home() {
         {/* ── Greeting Section ─────────────────── */}
         <section
           className="mb-8 sm:mb-10"
-          style={{ animation: "fade-in-up 0.6s ease-out 100ms both" }}
         >
-          <p className="text-lg sm:text-xl text-slate-400 font-light">
+          <p className="text-xl sm:text-2xl text-[#2D2D2D] font-medium">
             {greeting.emoji} {greeting.text}{profileName ? `, ${profileName}` : ""}
           </p>
-          <h1 className="text-4xl sm:text-5xl font-bold mt-1 tracking-tight">
-            <span
-              className="bg-clip-text text-transparent"
-              style={{
-                backgroundImage:
-                  "linear-gradient(135deg, #f1f5f9 0%, #c084fc 50%, #f472b6 100%)",
-                backgroundSize: "200% 200%",
-                animation: "gradient-shift 6s ease infinite",
-              }}
-            >
-              Ready to play?
-            </span>
+          <h1 className="text-4xl sm:text-5xl font-extrabold mt-1 tracking-tight text-[#2D2D2D]">
+            Ready to play?
           </h1>
         </section>
 
         {/* ── Quick Stats Row ──────────────────── */}
         <section
-          className="grid grid-cols-3 gap-3 sm:gap-4 md:gap-6 delay-300 fill-mode-both" style={{ animation: "fade-in-up 0.6s ease-out" }}
+          className="grid grid-cols-3 gap-3 sm:gap-4 md:gap-6"
           aria-label="Quick statistics"
         >
           {stats.map((stat, i) => (
             <div
               key={i}
-              className="bg-[#141828] border border-white/5 rounded-2xl p-3 sm:p-4 md:p-6 flex flex-col items-center justify-center text-center shadow-lg"
+              className="bg-[#E3D5CA] border-2 border-[#2D2D2D] rounded-2xl p-3 sm:p-4 md:p-6 flex flex-col items-center justify-center text-center"
             >
-              <span className="text-2xl md:text-3xl mb-1 filter drop-shadow-sm">{stat.icon}</span>
-              <span className="text-[10px] sm:text-xs md:text-sm text-slate-400 font-medium tracking-wide uppercase mb-0.5 md:mb-1">
+              <span className="text-2xl md:text-3xl mb-1">{stat.icon}</span>
+              <span className="text-[10px] sm:text-xs md:text-sm text-[#2D2D2D] font-bold tracking-wide uppercase mb-0.5 md:mb-1">
                 {stat.label}
               </span>
-              <span className="text-base sm:text-lg font-bold text-white">
+              <span className="text-base sm:text-lg font-black text-[#2D2D2D]">
                 {stat.value}
               </span>
             </div>
@@ -415,10 +349,9 @@ export default function Home() {
         {/* ── Bottom Safe Area / Status ─────────── */}
         <footer
           className="mt-8 sm:mt-10 pb-4 text-center"
-          style={{ animation: "fade-in-up 0.7s ease-out 700ms both" }}
         >
-          <div className="flex items-center justify-center gap-2 text-xs text-slate-500">
-            <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+          <div className="flex items-center justify-center gap-2 text-xs font-bold text-[#2D2D2D]">
+            <div className="w-3 h-3 rounded-full bg-teal-700 border border-[#2D2D2D]" />
             <span>Offline Ready — All data stays on your device</span>
           </div>
         </footer>

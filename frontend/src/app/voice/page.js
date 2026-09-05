@@ -95,17 +95,12 @@ export default function VoiceTalk() {
   };
 
   return (
-    <main className="min-h-dvh flex flex-col relative bg-[#1c0f13] overflow-hidden">
-      {/* Background Orbs */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
-        <div className="absolute top-[30%] left-[50%] -translate-x-1/2 w-[600px] h-[600px] rounded-full opacity-[0.15] blur-3xl bg-rose-500 animate-pulse" />
-      </div>
-
+    <main className="min-h-dvh flex flex-col relative bg-[#FDFBF7] overflow-hidden">
       <div className="relative z-10 flex flex-col flex-1 w-full max-w-md md:max-w-2xl lg:max-w-4xl mx-auto px-5 py-6 sm:py-8 md:py-12">
         <header className="flex items-center justify-between mb-8">
           <button
             onClick={() => router.push("/")}
-            className="w-12 h-12 bg-white/10 border border-white/20 rounded-2xl flex items-center justify-center text-white/90 hover:bg-white/20 transition-colors backdrop-blur-md"
+            className="w-12 h-12 bg-[#E3D5CA] border-2 border-[#2D2D2D] rounded-2xl flex items-center justify-center text-[#2D2D2D] hover:bg-[#d5c3b5] transition-colors"
             aria-label="Go Back"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
@@ -114,15 +109,15 @@ export default function VoiceTalk() {
           </button>
           
           <div className="text-center">
-            <h1 className="text-2xl font-bold text-white tracking-tight">Voice Talk</h1>
-            <p className="text-sm text-rose-300 font-medium">Record your memories 🎙️</p>
+            <h1 className="text-2xl font-black text-[#2D2D2D] tracking-tight">Voice Talk</h1>
+            <p className="text-sm text-[#2D2D2D] font-bold">Record your memories 🎙️</p>
           </div>
           
           <div className="w-12 h-12" />
         </header>
 
         {errorMsg && (
-          <div className="bg-red-500/20 border border-red-500/50 text-red-200 p-4 rounded-2xl mb-6 text-center text-sm font-medium">
+          <div className="bg-red-200 border-2 border-red-600 text-red-800 p-4 rounded-2xl mb-6 text-center text-sm font-bold">
             {errorMsg}
           </div>
         )}
@@ -130,15 +125,15 @@ export default function VoiceTalk() {
         {/* State 1: Recording / Text Display */}
         {!diaryEntry && (
           <div className="flex flex-col flex-1">
-            <div className="flex-1 bg-black/30 backdrop-blur-md rounded-3xl border border-white/10 p-6 flex flex-col shadow-2xl overflow-y-auto mb-8 min-h-[300px]">
+            <div className="flex-1 bg-[#E3D5CA] rounded-3xl border-2 border-[#2D2D2D] p-6 flex flex-col shadow-none overflow-y-auto mb-8 min-h-[300px]">
               {transcript ? (
-                <p className="text-xl sm:text-2xl text-white font-medium leading-relaxed">
+                <p className="text-xl sm:text-2xl text-[#2D2D2D] font-bold leading-relaxed">
                   "{transcript}"
                 </p>
               ) : (
-                <div className="flex-1 flex flex-col items-center justify-center text-rose-300/50 text-center">
+                <div className="flex-1 flex flex-col items-center justify-center text-[#2D2D2D] text-center">
                   <span className="text-6xl mb-4">🎤</span>
-                  <p className="text-lg">Tap the microphone and start speaking about your day...</p>
+                  <p className="text-lg font-bold">Tap the microphone and start speaking about your day...</p>
                 </div>
               )}
             </div>
@@ -147,10 +142,10 @@ export default function VoiceTalk() {
             <div className="flex flex-col items-center gap-6 pb-6">
               <button
                 onClick={toggleRecording}
-                className={`w-28 h-28 rounded-full flex items-center justify-center text-5xl shadow-2xl transition-all duration-300 ${
+                className={`w-28 h-28 rounded-full border-2 border-[#2D2D2D] flex items-center justify-center text-5xl transition-all duration-300 ${
                   isRecording 
-                    ? "bg-red-500 shadow-red-500/50 animate-pulse scale-110" 
-                    : "bg-gradient-to-br from-rose-500 to-pink-600 hover:scale-105"
+                    ? "bg-red-600 animate-pulse scale-110" 
+                    : "bg-teal-700 text-[#FDFBF7] hover:scale-105"
                 }`}
                 aria-label={isRecording ? "Stop Recording" : "Start Recording"}
               >
@@ -161,13 +156,13 @@ export default function VoiceTalk() {
                 {transcript && !isRecording && !isProcessing && (
                   <button
                     onClick={generateDiary}
-                    className="px-8 py-4 bg-emerald-500 text-black font-black rounded-2xl shadow-lg shadow-emerald-500/20 animate-fade-in hover:bg-emerald-400 active:scale-95 transition-all"
+                    className="px-8 py-4 bg-[#D96C5B] text-[#FDFBF7] font-black border-2 border-[#2D2D2D] rounded-2xl shadow-none animate-fade-in hover:bg-rose-500 active:scale-95 transition-all"
                   >
                     Save to Diary ✨
                   </button>
                 )}
                 {isProcessing && (
-                  <div className="text-rose-200 font-medium animate-pulse flex items-center gap-2 h-full">
+                  <div className="text-[#2D2D2D] font-bold animate-pulse flex items-center gap-2 h-full">
                     <span className="text-xl">✨</span> Gemini is writing your diary...
                   </div>
                 )}
@@ -179,11 +174,11 @@ export default function VoiceTalk() {
         {/* State 2: Diary Generated */}
         {diaryEntry && (
           <div className="flex-1 flex flex-col animate-fade-in">
-            <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-2xl mb-6 flex-1 text-slate-800">
-              <h2 className="text-2xl font-black text-rose-600 mb-6 flex items-center gap-2">
+            <div className="bg-[#E3D5CA] rounded-3xl border-2 border-[#2D2D2D] p-6 sm:p-8 mb-6 flex-1 text-[#2D2D2D]">
+              <h2 className="text-2xl font-black text-[#2D2D2D] mb-6 flex items-center gap-2">
                 <span>📖</span> Today's Entry
               </h2>
-              <div className="prose prose-rose prose-lg font-medium leading-relaxed" 
+              <div className="prose prose-slate prose-lg font-bold leading-relaxed" 
                    dangerouslySetInnerHTML={{ __html: diaryEntry.replace(/\n/g, '<br/>') }} />
             </div>
             
@@ -192,7 +187,7 @@ export default function VoiceTalk() {
                 setDiaryEntry(null);
                 setTranscript("");
               }}
-              className="w-full py-4 bg-rose-600 text-white font-bold rounded-2xl shadow-lg hover:bg-rose-500 active:scale-95 transition-all"
+              className="w-full py-4 bg-[#D96C5B] text-[#FDFBF7] font-black border-2 border-[#2D2D2D] rounded-2xl shadow-none hover:bg-rose-500 active:scale-95 transition-all"
             >
               Record Another Memory
             </button>
